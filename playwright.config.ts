@@ -17,7 +17,15 @@ function resolveBrowserSettings(
 ): PlaywrightTestConfig["use"] {
   switch (browser) {
     case "chrome":
-      return { browserName: "chromium" };
+      return {
+        browserName: "chromium",
+        launchOptions: {
+          args: [
+            `--window-position=${globalConfig.windowPositionX},${globalConfig.windowPositionY}`,
+            `--window-size=${globalConfig.windowWidth},${globalConfig.windowHeight}`,
+          ],
+        },
+      };
     case "edge":
       return { browserName: "chromium", channel: "msedge" };
     case "firefox":
@@ -38,6 +46,10 @@ function buildSharedUse(browser: BrowserName): PlaywrightTestConfig["use"] {
   return {
     baseURL: globalConfig.appUrl,
     headless: false,
+    viewport: {
+      width: globalConfig.windowWidth,
+      height: globalConfig.windowHeight,
+    },
     screenshot: "only-on-failure",
     trace: "on-first-retry",
     video: "retain-on-failure",

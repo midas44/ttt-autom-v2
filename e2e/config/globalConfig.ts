@@ -47,44 +47,25 @@ export class GlobalConfig {
   private async positionWindow(page: Page): Promise<void> {
     const x = this.windowPositionX;
     const y = this.windowPositionY;
-    const width = this.windowWidth;
-    const height = this.windowHeight;
 
     try {
-      const engineName = page.context().browser()?.browserType().name();
-      if (engineName === "chromium") {
-        await this.positionChromium(page, x, y, width, height);
-      } else {
-        await this.positionFirefox(page, x, y);
-      }
+      // CDP works only on Chromium — use it for position only
+      const cdp = await page.context().newCDPSession(page);
+      const { windowId } = await cdp.send("Browser.getWindowForTarget");
+      await cdp.send("Browser.setWindowBounds", {
+        windowId,
+        bounds: { left: x, top: y },
+      });
     } catch {
-      // Silently ignore — graceful degradation in headless or unsupported environments
+      // CDP unavailable (Firefox) — fall back to window.moveTo
+      try {
+        await page.evaluate(
+          ([px, py]) => window.moveTo(px, py),
+          [x, y] as const,
+        );
+      } catch {
+        // Silently ignore
+      }
     }
-  }
-
-  private async positionChromium(
-    page: Page,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-  ): Promise<void> {
-    const cdp = await page.context().newCDPSession(page);
-    const { windowId } = await cdp.send("Browser.getWindowForTarget");
-    await cdp.send("Browser.setWindowBounds", {
-      windowId,
-      bounds: { left: x, top: y, width, height, windowState: "normal" },
-    });
-  }
-
-  private async positionFirefox(
-    page: Page,
-    x: number,
-    y: number,
-  ): Promise<void> {
-    await page.evaluate(
-      ([px, py]) => window.moveTo(px, py),
-      [x, y] as const,
-    );
   }
 }

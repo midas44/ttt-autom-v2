@@ -27,6 +27,7 @@ function resolveBrowserSettings(
           firefoxUserPrefs: {
             "ui.systemUsesDarkTheme": 1,
             "dom.disable_window_move_resize": false,
+            "network.proxy.type": 0,
           },
         },
       };

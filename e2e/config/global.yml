@@ -1,0 +1,7 @@
+globalTimeout: 15000
+browserName: "chrome"
+windowPositionX: 300
+windowPositionY: 80
+fixtureDelayMs: 500
+windowWidth: 2560
+windowHeight: 1440

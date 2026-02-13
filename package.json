@@ -1,0 +1,16 @@
+{
+  "name": "ttt-autom",
+  "version": "1.0.2",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^25.2.3"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

@@ -1,0 +1,8 @@
+appName: "TTT (TimeTrackingTool aka TimeReportingTool)"
+appUrl: "https://ttt-***.noveogroup.com"
+env: "qa-1"
+lang: "en"
+dashboardPath: /report
+logoutUrl: https://cas-demo.noveogroup.com/logout
+waitUntil: networkidle
+logoutSuccessText: Logout successful

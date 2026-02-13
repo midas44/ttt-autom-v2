@@ -4,6 +4,14 @@ import type { BrowserName } from "./e2e/config/configUtils";
 
 const globalConfig = new GlobalConfig();
 
+const BROWSERS: BrowserName[] = ["chrome", "firefox"];
+
+const TAG_CONFIG: Record<string, RegExp> = {
+  debug: /@debug/,
+  smoke: /@smoke/,
+  regress: /@regress/,
+};
+
 function resolveBrowserSettings(
   browser: BrowserName,
 ): PlaywrightTestConfig["use"] {
@@ -25,37 +33,29 @@ function resolveBrowserSettings(
   }
 }
 
-const browserSettings = resolveBrowserSettings(globalConfig.browserName);
+function buildSharedUse(browser: BrowserName): PlaywrightTestConfig["use"] {
+  return {
+    baseURL: globalConfig.appUrl,
+    headless: false,
+    screenshot: "only-on-failure",
+    trace: "on-first-retry",
+    video: "retain-on-failure",
+    ...resolveBrowserSettings(browser),
+  };
+}
 
-const sharedUse: PlaywrightTestConfig["use"] = {
-  baseURL: globalConfig.appUrl,
-  headless: false,
-  screenshot: "only-on-failure",
-  trace: "on-first-retry",
-  video: "retain-on-failure",
-  ...browserSettings,
-};
+const projects = BROWSERS.flatMap((browser) =>
+  Object.entries(TAG_CONFIG).map(([tag, grep]) => ({
+    name: `${browser}-${tag}`,
+    grep,
+    use: buildSharedUse(browser),
+  })),
+);
 
 export default defineConfig({
   reporter: [["line"], ["html", { open: "never" }]],
   testDir: "./e2e/tests",
   timeout: 60_000,
   expect: { timeout: 10_000 },
-  projects: [
-    {
-      name: "debug",
-      grep: /@debug/,
-      use: { ...sharedUse },
-    },
-    {
-      name: "smoke",
-      grep: /@smoke/,
-      use: { ...sharedUse },
-    },
-    {
-      name: "regress",
-      grep: /@regress/,
-      use: { ...sharedUse },
-    },
-  ],
+  projects,
 });

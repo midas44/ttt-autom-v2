@@ -1,5 +1,4 @@
-globalTimeout: 15000
-browserName: "chrome"
+globalTimeout: 10000
 windowPositionX: 300
 windowPositionY: 80
 fixtureDelayMs: 500

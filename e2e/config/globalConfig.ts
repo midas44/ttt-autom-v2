@@ -1,18 +1,12 @@
 import * as path from "path";
 import type { Page } from "@playwright/test";
-import {
-  readYaml,
-  readNumber,
-  readBrowserName,
-  type BrowserName,
-} from "./configUtils";
+import { readYaml, readNumber } from "./configUtils";
 import { TttConfig } from "./tttConfig";
 
 const GLOBAL_YML = path.resolve(__dirname, "global.yml");
 
 export class GlobalConfig {
   readonly globalTimeout: number;
-  readonly browserName: BrowserName;
   readonly windowPositionX: number;
   readonly windowPositionY: number;
   readonly fixtureDelayMs: number;
@@ -29,7 +23,6 @@ export class GlobalConfig {
     const data = readYaml(GLOBAL_YML);
 
     this.globalTimeout = readNumber(data["globalTimeout"], 15000, "globalTimeout");
-    this.browserName = readBrowserName(data["browserName"]);
     this.windowPositionX = readNumber(data["windowPositionX"], 300, "windowPositionX");
     this.windowPositionY = readNumber(data["windowPositionY"], 80, "windowPositionY");
     this.fixtureDelayMs = readNumber(data["fixtureDelayMs"], 500, "fixtureDelayMs");
@@ -58,7 +51,8 @@ export class GlobalConfig {
     const height = this.windowHeight;
 
     try {
-      if (this.browserName === "chrome" || this.browserName === "edge") {
+      const engineName = page.context().browser()?.browserType().name();
+      if (engineName === "chromium") {
         await this.positionChromium(page, x, y, width, height);
       } else {
         await this.positionFirefox(page, x, y);

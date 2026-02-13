@@ -22,27 +22,22 @@ export class VacationDetailsDialog {
 
   /**
    * Deletes the vacation request:
-   * 1. Clicks Delete button
+   * 1. Clicks Delete button in the details dialog
    * 2. Waits for confirmation dialog
    * 3. Clicks the confirmation Delete button
-   * 4. Waits for both dialogs to detach
+   * 4. Waits for dialogs to detach
    */
   async deleteRequest(): Promise<void> {
     await this.deleteButton.click();
 
-    // Wait for confirmation dialog
+    // Handle "Delete the request?" confirmation dialog
     const confirmDialog = this.page.getByRole("dialog", {
       name: /Delete the request/i,
     });
     await confirmDialog.waitFor({ state: "visible" });
+    await confirmDialog.getByRole("button", { name: /delete/i }).click();
 
-    // Click confirmation Delete button
-    const confirmDeleteButton = confirmDialog.getByRole("button", {
-      name: /delete/i,
-    });
-    await confirmDeleteButton.click();
-
-    // Wait for both dialogs to detach
+    // Wait for both dialogs to close
     await confirmDialog.waitFor({ state: "detached" });
     await this.dialog.waitFor({ state: "detached" });
   }

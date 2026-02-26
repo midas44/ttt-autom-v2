@@ -1,0 +1,7 @@
+[    2631ms] [ERROR] Failed to load script https://feedback-preprod.noveogroup.com/feedback.js: Event @ https://ttt-qa-1.noveogroup.com/static/js/316.4d03d035.chunk.js:0
+[    2631ms] [ERROR] Failed to load feedback script: Error: Script load error: https://feedback-preprod.noveogroup.com/feedback.js
+    at A.s.onerror (https://ttt-qa-1.noveogroup.com/static/js/316.4d03d035.chunk.js:1:5111) @ https://ttt-qa-1.noveogroup.com/static/js/316.4d03d035.chunk.js:0
+[    2690ms] [ERROR] Access to fetch at 'https://cas-demo.noveogroup.com/login?service=http%3A%2F%2Fcs-preprod.noveogroup.com%2Fapi%2Fresources' (redirected from 'https://cs-preprod.noveogroup.com/api/resources') from origin 'https://ttt-qa-1.noveogroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://ttt-qa-1.noveogroup.com/vacation/chart:0
+[    2690ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://cas-demo.noveogroup.com/login?service=http%3A%2F%2Fcs-preprod.noveogroup.com%2Fapi%2Fresources:0
+[    2691ms] Uncaught (in promise) TypeError: Failed to fetch
+    at <anonymous> (https://cs-preprod.noveogroup.com/js/resources.js?6920:32:8815)

@@ -1,0 +1,14 @@
+- generic [ref=e3]:
+  - generic [ref=e6]:
+    - img "Новео ТТТ" [ref=e7]
+    - generic [ref=e8]:
+      - generic [ref=e10]:
+        - generic [ref=e11]: Login
+        - textbox [ref=e13]
+      - button "LOGIN" [ref=e14] [cursor=pointer]
+  - contentinfo [ref=e16]:
+    - generic [ref=e17]:
+      - text: © 2004 – 2026 Noveo |
+      - link "Сообщить разработчикам об ошибке" [ref=e18] [cursor=pointer]:
+        - /url: https://gitlab.noveogroup.com/noveo-internal-tools/ttt-spring/issues/new?issuable_template=Bug
+    - generic [ref=e19]: "Build #: 2.1.26-SNAPSHOT.289434 | Build date: 26.02.2026"

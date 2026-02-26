@@ -3,9 +3,14 @@
   "version": "1.0.2",
   "scripts": {
     "test": "playwright test",
-    "test:headed": "playwright test --headed"
+    "test:headed": "playwright test --headed",
+    "mcp:playwright": "npx @playwright/mcp@latest --browser chrome --codegen typescript --test-id-attribute data-qa",
+    "mcp:playwright:headed": "npx @playwright/mcp@latest --browser chrome --codegen typescript --test-id-attribute data-qa",
+    "mcp:playwright:firefox": "npx @playwright/mcp@latest --browser firefox --codegen typescript",
+    "mcp:postgres": "docker run -i --rm -e DATABASE_URI crystaldba/postgres-mcp --access-mode=restricted"
   },
   "devDependencies": {
+    "@playwright/mcp": "^0.0.68",
     "@playwright/test": "^1.55.0",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.2.3"

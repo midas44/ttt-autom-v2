@@ -1,0 +1,80 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - button "Новео ТТТ" [ref=e8] [cursor=pointer]:
+        - img "Новео ТТТ" [ref=e9]
+      - navigation [ref=e13]:
+        - list [ref=e14]:
+          - listitem [ref=e15]:
+            - link "My tasks" [ref=e16] [cursor=pointer]:
+              - /url: /report
+          - listitem [ref=e17]:
+            - button "Calendar of absences" [ref=e18] [cursor=pointer]:
+              - generic [ref=e19]: Calendar of absences
+          - listitem [ref=e21]:
+            - link "Planner" [ref=e22] [cursor=pointer]:
+              - /url: /planner
+          - listitem [ref=e23]:
+            - link "Statistics" [ref=e24] [cursor=pointer]:
+              - /url: /statistics/general
+              - generic [ref=e25]: Statistics
+      - generic [ref=e27]:
+        - generic [ref=e29] [cursor=pointer]:
+          - generic [ref=e30]: EN
+          - img [ref=e32]
+        - generic [ref=e35]:
+          - button "Vladimir Ulyanov Vladimir Ulyanov" [ref=e36] [cursor=pointer]:
+            - img "Vladimir Ulyanov" [ref=e37]
+            - link "Vladimir Ulyanov" [ref=e38]:
+              - /url: /admin/account
+              - generic [ref=e39]:
+                - text: Vladimir
+                - text: Ulyanov
+          - button [ref=e43] [cursor=pointer]
+    - generic:
+      - generic:
+        - generic:
+          - text: You have overdue
+          - link "day off rescheduling requests":
+            - /url: /vacation/request/daysoff-request/APPROVER
+          - text: . Please approve or reject them
+    - generic [ref=e45]:
+      - generic [ref=e46]:
+        - text: My sick leaves
+        - button "Add a sick note" [ref=e47] [cursor=pointer]
+      - table [ref=e49]:
+        - rowgroup [ref=e50]:
+          - row "Sick leave dates Calendar days Number Accountant State Actions" [ref=e51]:
+            - columnheader "Sick leave dates" [ref=e52]:
+              - button "Sick leave dates" [ref=e55] [cursor=pointer]: Sick leave dates
+            - columnheader "Calendar days" [ref=e57]:
+              - button "Calendar days" [ref=e60] [cursor=pointer]: Calendar days
+            - columnheader "Number" [ref=e62]:
+              - button "Number" [ref=e65] [cursor=pointer]: Number
+            - columnheader "Accountant" [ref=e67]:
+              - generic [ref=e70]: Accountant
+            - columnheader "State" [ref=e71]:
+              - button "State" [ref=e74] [cursor=pointer]: State
+            - columnheader "Actions" [ref=e76]:
+              - generic [ref=e79]: Actions
+        - rowgroup [ref=e80]:
+          - row "No data" [ref=e81]:
+            - cell "No data" [ref=e82]:
+              - generic [ref=e83]: No data
+        - rowgroup [ref=e84]:
+          - row "Total 0" [ref=e85]:
+            - cell "Total" [ref=e86]
+            - cell "0" [ref=e87]
+            - cell [ref=e88]
+            - cell [ref=e89]
+            - cell [ref=e90]
+            - cell [ref=e91]
+    - contentinfo [ref=e93]:
+      - generic [ref=e94]:
+        - text: © 2004 – 2026 Noveo |
+        - link "Report an error to developers" [ref=e95] [cursor=pointer]:
+          - /url: https://gitlab.noveogroup.com/noveo-internal-tools/ttt-spring/issues/new?issuable_template=Bug
+      - generic [ref=e96]: "Build #: 2.1.26-SNAPSHOT.289434 | Build date: 26.02.2026"
+  - generic [ref=e98]:
+    - img "NoveoAI" [ref=e101]
+    - button "Expand banner" [ref=e102] [cursor=pointer]

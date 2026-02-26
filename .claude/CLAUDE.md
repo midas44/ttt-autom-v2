@@ -131,3 +131,44 @@ Projects are generated as a matrix of `BROWSERS × TAG_CONFIG`:
 - Chrome/Edge: CDP protocol for window positioning
 - Firefox: `window.moveTo()` fallback, custom user prefs for dark theme and move-resize
 - Errors silently ignored for headless/unsupported environments
+
+## MCP Integration (Development-Time)
+
+Two MCP servers are configured for use during test development with Claude Code.
+**These are NOT runtime dependencies** — all generated tests must run via `npx playwright test`.
+
+### Playwright MCP (`@playwright/mcp`)
+
+Used for UI reconnaissance during test generation:
+- Explore TTT pages and capture accessibility snapshots
+- Discover selectors and element roles
+- Validate UI flows before writing test code
+- Configured with `--codegen typescript` for TypeScript snippet generation
+- Configured with `--test-id-attribute data-qa` to match project selector strategy
+
+```bash
+# Start manually (if needed outside Claude Code)
+npm run mcp:playwright
+```
+
+**Workflow:** See `docs/mcp/RECON_WORKFLOW.md` for the full reconnaissance → codegen pipeline.
+
+### Postgres MCP Pro (`crystaldba/postgres-mcp`)
+
+Installed in **restricted (read-only) mode** for future DB integration.
+Currently available for schema exploration and test data discovery only.
+**No test code should depend on this yet.**
+
+```bash
+# Requires POSTGRES_URI env var
+npm run mcp:postgres
+```
+
+### Hybrid Architecture Rule
+
+```
+MCP = development-time reconnaissance tool (used by Claude Code)
+CLI = runtime test execution (used by npx playwright test / CI)
+```
+
+Generated `.spec.ts` files must NEVER import from or depend on MCP packages.

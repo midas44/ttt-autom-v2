@@ -1,7 +1,7 @@
 # Autotest Generation Prompt
 
 ## TASK
-- Create an autotest for the described test case using the existing framework architecture (config, pages, fixtures, data) and **Playwright MCP**.
+- Create an autotest for the described test case using the existing framework architecture (config, pages, fixtures, data) and **Playwright MCP** (via the official plugin or `playwright-cli`).
 - For parametrization, define a data class named in the format: `[TestCaseName]Data`.
 - Do **not** hardcode any test data inside the test class.
 - Place as much logic as possible **outside** the test class.

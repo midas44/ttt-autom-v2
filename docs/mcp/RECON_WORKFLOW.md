@@ -2,13 +2,15 @@
 
 ## Overview
 
-This workflow uses Playwright MCP to explore the TTT application UI,
-then generates standard Playwright CLI test code that conforms to
-the project's 5-layer architecture.
+This workflow uses Playwright MCP (via the official plugin or `playwright-cli`)
+to explore the TTT application UI, then generates standard Playwright CLI test
+code that conforms to the project's 5-layer architecture.
 
-## Phase 1: Reconnaissance (Playwright MCP)
+## Phase 1: Reconnaissance (Playwright MCP Plugin or playwright-cli)
 
-Use the Playwright MCP tools to explore the target feature:
+Use Playwright MCP tools or `playwright-cli` to explore the target feature.
+Both provide the same accessibility snapshots; choose based on context
+(see `docs/mcp/README.md` for comparison).
 
 1. **Navigate** to the TTT environment URL from `e2e/config/ttt/ttt.yml`
    (replace `***` with the target env, e.g., `qa-1`).

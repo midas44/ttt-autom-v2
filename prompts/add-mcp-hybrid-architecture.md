@@ -34,7 +34,7 @@ Introduce **two MCP servers** and a **hybrid test generation workflow** that use
 │              (developer + Claude Code)                   │
 │                                                         │
 │  Playwright MCP ──► explore TTT UI                      │
-│       │              - navigate flows                   │
+│  (plugin or CLI)     - navigate flows                   │
 │       │              - collect accessibility snapshots   │
 │       │              - discover selectors & roles        │
 │       │              - capture page structure            │
@@ -67,53 +67,46 @@ Introduce **two MCP servers** and a **hybrid test generation workflow** that use
 
 ## 3. Task Breakdown
 
-### 3.1 — Install and Configure Microsoft Playwright MCP
+### 3.1 — Playwright MCP via Official Plugin
 
-Use the **official Microsoft Playwright MCP** (`@playwright/mcp`), NOT the executeautomation community one.
+The Playwright MCP is provided by the **official Anthropic Playwright plugin**
+(`playwright@claude-plugins-official`), installed as a Claude Code plugin.
 
 **Installation:**
 
 ```bash
-npm install --save-dev @playwright/mcp
+# Install the plugin via Claude Code (interactive)
+# Or it is auto-installed when enabled in the plugins marketplace
 ```
 
-**Add MCP configuration** to the project. Create `.mcp.json` at project root:
+The plugin manages the `@playwright/mcp` server lifecycle automatically.
+Its config is at `~/.claude/plugins/cache/claude-plugins-official/playwright/<version>/.mcp.json`.
+
+**Plugin config customization** (if needed):
+
+The default plugin config uses `@playwright/mcp@latest` without browser flags.
+To use Playwright's bundled Chromium (instead of system Chrome), add `--browser chromium`:
 
 ```json
 {
-  "mcpServers": {
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "-y", "@playwright/mcp@latest",
-        "--browser", "chrome",
-        "--codegen", "typescript",
-        "--test-id-attribute", "data-qa"
-      ]
-    }
+  "playwright": {
+    "command": "npx",
+    "args": ["@playwright/mcp@latest", "--browser", "chromium"]
   }
 }
 ```
 
-Configuration rationale:
-- `--browser chrome`: Matches the primary project browser. Firefox/Edge reconnaissance is secondary.
-- `--codegen typescript`: Enables TypeScript code generation from MCP interactions — directly useful for our hybrid workflow.
-- `--test-id-attribute data-qa`: Aligns with the project's selector priority (stable attributes like `data-qa`).
+**No `.claude/.mcp.json` entry is needed for Playwright** — the plugin replaces it.
 
-**Also register via Claude Code CLI** (for developer convenience):
+**Alternative: `playwright-cli` skill** is also available for browser automation
+via bash commands. Both approaches produce the same accessibility snapshots.
 
-```bash
-claude mcp add playwright -- npx -y @playwright/mcp@latest --browser chrome --codegen typescript --test-id-attribute data-qa
-```
-
-**Add to `package.json` scripts:**
+**`package.json` scripts** remain available for standalone MCP use outside Claude Code:
 
 ```json
 {
   "scripts": {
-    "mcp:playwright": "npx @playwright/mcp@latest --browser chrome --codegen typescript --test-id-attribute data-qa",
-    "mcp:playwright:headed": "npx @playwright/mcp@latest --browser chrome --codegen typescript --test-id-attribute data-qa",
-    "mcp:playwright:firefox": "npx @playwright/mcp@latest --browser firefox --codegen typescript"
+    "mcp:playwright": "npx @playwright/mcp@latest --browser chromium --codegen typescript --test-id-attribute data-qa"
   }
 }
 ```
@@ -124,14 +117,11 @@ Use **Postgres MCP Pro** (`crystaldba/postgres-mcp`) in **restricted (read-only)
 
 > **Important:** Do NOT redesign anything related to DB usage in the test framework. This is infrastructure prep only. No test code should use the DB MCP yet. No DB-related fixtures, utilities, or data classes should be created or modified.
 
-**Add to `.mcp.json`:**
+**Add to `.claude/.mcp.json`** (Playwright is handled by the plugin, only Postgres goes here):
 
 ```json
 {
   "mcpServers": {
-    "playwright": {
-      "...": "...as above..."
-    },
     "postgres": {
       "command": "docker",
       "args": [
@@ -422,17 +412,12 @@ Create `docs/mcp/README.md`:
 
 ### 1. Playwright MCP (UI Reconnaissance)
 
-Already configured in `.mcp.json`. When using Claude Code:
-
-```
-Use playwright mcp to open a browser and navigate to https://ttt-qa-1.noveogroup.com
-```
-
-Claude Code will use the Playwright MCP tools to:
-- `browser_navigate` — go to URLs
-- `browser_snapshot` — capture accessibility tree
-- `browser_click` / `browser_type` — interact with elements
-- `browser_evaluate` — run JS in the page
+Provided by the official Anthropic Playwright plugin or via `playwright-cli` skill.
+When using Claude Code, MCP tools or CLI commands are available for:
+- `browser_navigate` / `playwright-cli goto` — go to URLs
+- `browser_snapshot` / `playwright-cli snapshot` — capture accessibility tree
+- `browser_click` / `playwright-cli click` — interact with elements
+- `browser_evaluate` / `playwright-cli eval` — run JS in the page
 
 ### 2. Postgres MCP (DB Exploration — Future)
 
@@ -482,7 +467,7 @@ docs/mcp/
 
 | Action | Path | Description |
 |--------|------|-------------|
-| CREATE | `.mcp.json` | MCP server configuration for both servers |
+| CREATE | `.claude/.mcp.json` | MCP server configuration (Postgres only; Playwright via plugin) |
 | CREATE | `docs/mcp/README.md` | Developer quick-reference |
 | CREATE | `docs/mcp/RECON_WORKFLOW.md` | Reconnaissance → codegen workflow |
 | CREATE | `docs/mcp/SELECTOR_STRATEGY.md` | Selector extraction strategy |
@@ -498,8 +483,8 @@ After completing all changes, verify:
 
 - [ ] `npm install` succeeds without errors
 - [ ] `npm test` still runs all existing tests without regression
-- [ ] `npm run mcp:playwright` starts the Playwright MCP server
-- [ ] `.mcp.json` is valid JSON and recognized by Claude Code (`/mcp` command shows both servers)
+- [ ] Playwright MCP plugin is loaded (check `/mcp` in Claude Code)
+- [ ] `.claude/.mcp.json` is valid JSON and recognized by Claude Code (`/mcp` shows Postgres server)
 - [ ] No MCP imports exist in any file under `e2e/tests/`, `e2e/pages/`, `e2e/fixtures/`, or `e2e/data/`
 - [ ] `CLAUDE.md` contains the new MCP section AND all original content is preserved
 - [ ] `docs/mcp/snapshots/` is in `.gitignore`

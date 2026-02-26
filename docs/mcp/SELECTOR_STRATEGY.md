@@ -36,6 +36,11 @@ const submitBtn = await resolveFirstVisible([
 
 ## Playwright MCP `--test-id-attribute` Integration
 
-The MCP server is configured with `--test-id-attribute data-qa`.
-This means MCP snapshot output will highlight `data-qa` values,
-making them easy to extract during reconnaissance.
+When using the MCP plugin directly (via `@playwright/mcp`), configure
+`--test-id-attribute data-qa` to highlight `data-qa` values in snapshots.
+The official Playwright plugin does not set this flag by default — add it
+to the plugin's `.mcp.json` if needed.
+
+When using `playwright-cli`, the `--test-id-attribute` is set in the
+project's `.claude/.mcp.json` (for the standalone MCP server config)
+or passed as a CLI flag.

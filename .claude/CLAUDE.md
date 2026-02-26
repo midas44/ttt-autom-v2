@@ -134,28 +134,38 @@ Projects are generated as a matrix of `BROWSERS × TAG_CONFIG`:
 
 ## MCP Integration (Development-Time)
 
-Two MCP servers are configured for use during test development with Claude Code.
+Two MCP servers are available for use during test development with Claude Code.
 **These are NOT runtime dependencies** — all generated tests must run via `npx playwright test`.
 
-### Playwright MCP (`@playwright/mcp`)
+### Playwright MCP (`@playwright/mcp`) — via Official Plugin
+
+Provided by the **official Anthropic Playwright plugin** (`playwright@claude-plugins-official`),
+installed as a Claude Code plugin. The plugin launches `@playwright/mcp` with `--browser chromium`.
+
+**No `.mcp.json` entry is needed** — the plugin manages the MCP server lifecycle automatically.
 
 Used for UI reconnaissance during test generation:
-- Explore TTT pages and capture accessibility snapshots
+- Explore TTT pages and capture accessibility snapshots (inline, with diff-based updates)
 - Discover selectors and element roles
 - Validate UI flows before writing test code
-- Configured with `--codegen typescript` for TypeScript snippet generation
-- Configured with `--test-id-attribute data-qa` to match project selector strategy
-
-```bash
-# Start manually (if needed outside Claude Code)
-npm run mcp:playwright
-```
+- MCP tools: `browser_navigate`, `browser_snapshot`, `browser_click`, `browser_type`, `browser_evaluate`, etc.
 
 **Workflow:** See `docs/mcp/RECON_WORKFLOW.md` for the full reconnaissance → codegen pipeline.
 
+### Playwright CLI (`playwright-cli` skill)
+
+An alternative browser automation interface available via the `playwright-cli` skill.
+Uses `npx playwright-cli` bash commands (`open`, `fill`, `click`, `snapshot`, `close`).
+
+**When to use which:**
+- **MCP Plugin** — preferred for reconnaissance sessions; inline snapshots with diff compression save context tokens
+- **playwright-cli** — useful for quick one-off checks or when MCP plugin is unavailable; zero-setup, works with any installed browser
+
+Both tools produce the same accessibility snapshots and can be used interchangeably for selector discovery.
+
 ### Postgres MCP Pro (`crystaldba/postgres-mcp`)
 
-Installed in **restricted (read-only) mode** for future DB integration.
+Configured in `.claude/.mcp.json` in **restricted (read-only) mode** for future DB integration.
 Currently available for schema exploration and test data discovery only.
 **No test code should depend on this yet.**
 
@@ -167,8 +177,8 @@ npm run mcp:postgres
 ### Hybrid Architecture Rule
 
 ```
-MCP = development-time reconnaissance tool (used by Claude Code)
-CLI = runtime test execution (used by npx playwright test / CI)
+MCP / playwright-cli = development-time reconnaissance tools (used by Claude Code)
+CLI                   = runtime test execution (used by npx playwright test / CI)
 ```
 
 Generated `.spec.ts` files must NEVER import from or depend on MCP packages.

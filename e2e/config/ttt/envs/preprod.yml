@@ -1,1 +1,15 @@
-env: "preprod"
+#Env properties
+
+dbHost: "10.0.6.188"
+
+dbPort: 5433
+
+initialDatabase: "ttt"
+
+dbUsername: "ttt"
+
+dbPassword: 123456
+
+apiToken: "2a74b820-468e-40db-9dcc-22b9ed3e2cad"
+
+casLogin: true

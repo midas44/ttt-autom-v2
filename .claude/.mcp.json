@@ -3,7 +3,7 @@
 
     "postgres": {
       "type": "stdio",
-      "command": "uvx",
+      "command": "/home/v/.local/bin/uvx",
       "args": ["postgres-mcp", "--access-mode=restricted"],
       "env": {
         "DATABASE_URI": "postgresql://ttt:123456@10.0.4.220:5433/ttt?connect_timeout=10&keepalives=1&keepalives_idle=30&keepalives_interval=10&keepalives_count=3",

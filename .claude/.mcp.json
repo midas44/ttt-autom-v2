@@ -12,6 +12,24 @@
         "HTTP_PROXY": "",
         "HTTPS_PROXY": ""
       }
-    }
+    },
+       "ttt-swagger-test": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@ivotoby/openapi-mcp-server"
+      ],
+      "env": {
+        "OPENAPI_SPEC_PATH": "https://ttt-qa-1.noveogroup.com/api/ttt/v2/api-docs?group=test-api",
+        "API_BASE_URL": "https://ttt-qa-1.noveogroup.com/api/ttt",
+        "API_HEADERS": "API_SECRET_TOKEN:af38fc55-97a4-4ea3-86c7-c5c80686f6be",
+        "SERVER_NAME": "ttt-swagger-test",
+        "NO_PROXY": "ttt-qa-1.noveogroup.com,ttt-qa-2.noveogroup.com,*.noveogroup.com",
+        "no_proxy": "ttt-qa-1.noveogroup.com,ttt-qa-2.noveogroup.com,*.noveogroup.com",
+        "HTTP_PROXY": "",
+        "HTTPS_PROXY": ""
+      }
+    } 
   }
 }

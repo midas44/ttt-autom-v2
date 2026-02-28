@@ -1,16 +1,16 @@
 {
   "mcpServers": {
-   
+
     "postgres": {
-      "command": "docker",
-      "args": [
-        "run", "-i", "--rm",
-        "-e", "DATABASE_URI",
-        "crystaldba/postgres-mcp",
-        "--access-mode=restricted"
-      ],
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["postgres-mcp", "--access-mode=restricted"],
       "env": {
-        "DATABASE_URI": "${POSTGRES_URI}"
+        "DATABASE_URI": "postgresql://ttt:123456@10.0.4.220:5433/ttt?connect_timeout=10&keepalives=1&keepalives_idle=30&keepalives_interval=10&keepalives_count=3",
+        "NO_PROXY": "10.0.4.220",
+        "no_proxy": "10.0.4.220",
+        "HTTP_PROXY": "",
+        "HTTPS_PROXY": ""
       }
     }
   }

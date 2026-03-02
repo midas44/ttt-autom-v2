@@ -1,5 +1,10 @@
 declare const process: { env: Record<string, string | undefined> };
 
+import type { TestDataMode } from "../config/configUtils";
+import type { TttConfig } from "../config/tttConfig";
+import { DbClient } from "../config/db/dbClient";
+import { findAdminEmployee } from "./queries/adminQueries";
+
 export class AdminTc1Data {
   readonly username: string;
   readonly createdBy: string;
@@ -7,6 +12,23 @@ export class AdminTc1Data {
   readonly apiKeyNamePattern: RegExp;
   readonly allowedMethodsAfterCreate: string[];
   readonly allowedMethodsAfterEdit: string;
+
+  static async create(
+    mode: TestDataMode,
+    tttConfig: TttConfig,
+  ): Promise<AdminTc1Data> {
+    if (mode === "static") return new AdminTc1Data();
+    if (mode === "saved")
+      throw new Error('testDataMode "saved" is not yet implemented');
+
+    const db = new DbClient(tttConfig);
+    try {
+      const { login, displayName } = await findAdminEmployee(db);
+      return new AdminTc1Data(login, displayName);
+    } finally {
+      await db.close();
+    }
+  }
 
   constructor(
     /** @env ADMIN_TC1_USERNAME — Admin user who manages API keys */

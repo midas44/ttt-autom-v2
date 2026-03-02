@@ -1,5 +1,9 @@
 declare const process: { env: Record<string, string | undefined> };
 
+import type { TestDataMode } from "../config/configUtils";
+import type { TttConfig } from "../config/tttConfig";
+import { DbClient } from "../config/db/dbClient";
+import { findEmployeeWithProject } from "./queries/reportQueries";
 import { formatTimestamp, formatDateColumn } from "../utils/stringUtils";
 
 export class ReportTc1Data {
@@ -10,6 +14,30 @@ export class ReportTc1Data {
   readonly searchTerm: string;
   readonly rowPattern: RegExp;
   readonly dateLabel: string;
+
+  static async create(
+    mode: TestDataMode,
+    tttConfig: TttConfig,
+  ): Promise<ReportTc1Data> {
+    if (mode === "static") return new ReportTc1Data();
+    if (mode === "saved")
+      throw new Error('testDataMode "saved" is not yet implemented');
+
+    const db = new DbClient(tttConfig);
+    try {
+      const { login, projectName } = await findEmployeeWithProject(db);
+      const reportValue = ReportTc1Data.randomReportValue();
+      return new ReportTc1Data(login, projectName, "autotest", reportValue);
+    } finally {
+      await db.close();
+    }
+  }
+
+  /** Generates a random report value from 0.25 to 8.00 in 0.25 increments. */
+  private static randomReportValue(): string {
+    const steps = Math.floor(Math.random() * 32) + 1; // 1..32
+    return (steps * 0.25).toFixed(2);
+  }
 
   constructor(
     /** @env REPORT_TC1_USERNAME — Employee who can manage personal task reports */

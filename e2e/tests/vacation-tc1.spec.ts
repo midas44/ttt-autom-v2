@@ -14,7 +14,7 @@ test("vacation_tc1 - create unpaid vacation request and remove @regress", async 
   // 1. Configs and data
   const tttConfig = new TttConfig();
   const globalConfig = new GlobalConfig(tttConfig);
-  const data = new VacationTc1Data();
+  const data = await VacationTc1Data.create(globalConfig.testDataMode, tttConfig);
 
   // 2. Apply viewport
   await globalConfig.applyViewport(page);

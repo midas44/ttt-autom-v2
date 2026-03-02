@@ -1,5 +1,10 @@
 declare const process: { env: Record<string, string | undefined> };
 
+import type { TestDataMode } from "../config/configUtils";
+import type { TttConfig } from "../config/tttConfig";
+import { DbClient } from "../config/db/dbClient";
+import { findRandomEmployee, hasVacationConflict } from "./queries/vacationQueries";
+
 const MONTH_NAMES = [
   "January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December",
@@ -20,6 +25,71 @@ export class VacationTc1Data {
   readonly notificationText: string;
   readonly comment: string;
   readonly periodPattern: RegExp;
+
+  static async create(
+    mode: TestDataMode,
+    tttConfig: TttConfig,
+  ): Promise<VacationTc1Data> {
+    if (mode === "static") return new VacationTc1Data();
+    if (mode === "saved")
+      throw new Error('testDataMode "saved" is not yet implemented');
+
+    const db = new DbClient(tttConfig);
+    try {
+      const username = await findRandomEmployee(db);
+      const { startDate, endDate } = await VacationTc1Data.findAvailableDates(db, username);
+      return new VacationTc1Data(username, startDate, endDate);
+    } finally {
+      await db.close();
+    }
+  }
+
+  /** Finds a Mon–Sun window without vacation conflicts, starting from next Monday. */
+  private static async findAvailableDates(
+    db: DbClient,
+    login: string,
+  ): Promise<{ startDate: string; endDate: string }> {
+    const now = new Date();
+    // Find next Monday
+    const day = now.getDay(); // 0=Sun, 1=Mon, ...
+    const daysUntilMonday = day === 0 ? 1 : day === 1 ? 7 : 8 - day;
+    const monday = new Date(now);
+    monday.setDate(now.getDate() + daysUntilMonday);
+
+    for (let attempt = 0; attempt < 8; attempt++) {
+      const start = new Date(monday);
+      start.setDate(monday.getDate() + attempt * 7);
+      const end = new Date(start);
+      end.setDate(start.getDate() + 6); // Sunday
+
+      const startIso = VacationTc1Data.toIso(start);
+      const endIso = VacationTc1Data.toIso(end);
+
+      const conflict = await hasVacationConflict(db, login, startIso, endIso);
+      if (!conflict) {
+        return {
+          startDate: VacationTc1Data.toDdMmYyyy(start),
+          endDate: VacationTc1Data.toDdMmYyyy(end),
+        };
+      }
+    }
+    throw new Error(
+      `Could not find a conflict-free Mon–Sun window for "${login}" within 8 weeks`,
+    );
+  }
+
+  private static toIso(d: Date): string {
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  private static toDdMmYyyy(d: Date): string {
+    const dd = String(d.getDate()).padStart(2, "0");
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    return `${dd}.${mm}.${d.getFullYear()}`;
+  }
 
   constructor(
     /** @env VACATION_TC1_USERNAME — Employee who can manage personal vacation requests */

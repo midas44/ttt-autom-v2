@@ -19,6 +19,11 @@ export class TttConfig {
   readonly waitUntil: WaitUntilValue;
   readonly logoutSuccessText: string;
   readonly apiToken: string;
+  readonly dbHost: string;
+  readonly dbPort: number;
+  readonly dbName: string;
+  readonly dbUsername: string;
+  readonly dbPassword: string;
 
   constructor() {
     const data = readYaml(TTT_YML);
@@ -31,9 +36,14 @@ export class TttConfig {
     this.env = readString(data["env"], "qa-1", "env");
     this.lang = readString(data["lang"], "en", "lang");
 
-    // Load env-specific YAML for apiToken (empty string is valid — means env has no token)
+    // Load env-specific YAML (empty string is valid — means env has no value)
     const envData = readYaml(path.resolve(ENV_DIR, `${this.env}.yml`));
     this.apiToken = String(envData["apiToken"] ?? "");
+    this.dbHost = String(envData["dbHost"] ?? "");
+    this.dbPort = Number(envData["dbPort"] ?? 5433);
+    this.dbName = String(envData["initialDatabase"] ?? "ttt");
+    this.dbUsername = String(envData["dbUsername"] ?? "");
+    this.dbPassword = String(envData["dbPassword"] ?? "");
     this.dashboardPath = readString(
       data["dashboardPath"],
       "/report",

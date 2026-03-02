@@ -13,7 +13,7 @@ test("admin_tc1 - create, edit and delete API key @regress", async ({ page }, te
   // 1. Configs and data
   const tttConfig = new TttConfig();
   const globalConfig = new GlobalConfig(tttConfig);
-  const data = new AdminTc1Data();
+  const data = await AdminTc1Data.create(globalConfig.testDataMode, tttConfig);
 
   // 2. Apply viewport
   await globalConfig.applyViewport(page);

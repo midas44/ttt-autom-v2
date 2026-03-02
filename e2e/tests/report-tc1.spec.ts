@@ -13,7 +13,7 @@ test("report_tc1 - add task report via inline editor and clear it @regress", asy
   // 1. Configs and data
   const tttConfig = new TttConfig();
   const globalConfig = new GlobalConfig(tttConfig);
-  const data = new ReportTc1Data();
+  const data = await ReportTc1Data.create(globalConfig.testDataMode, tttConfig);
 
   // 2. Apply viewport
   await globalConfig.applyViewport(page);

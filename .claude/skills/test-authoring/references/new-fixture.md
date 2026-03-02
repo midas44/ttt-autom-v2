@@ -44,3 +44,4 @@ export class [FixtureName] {
 - Support optional behavior via options interfaces (e.g., `{ verify?: boolean }`).
 - Wait for `networkidle` after actions triggering server requests.
 - Prefer extending an existing fixture before creating a new one.
+- When saving text artifacts, write to disk via `testInfo.outputPath()` + `writeFile()`, then `testInfo.attach({ path })`. Do NOT use `testInfo.attach({ body })` — it only saves to HTML report, not `test-results/`.

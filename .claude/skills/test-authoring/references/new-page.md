@@ -37,3 +37,7 @@ export class [PageName] {
 - For unstable elements, implement multi-strategy fallback (try multiple locator strategies, return first match).
 - Cache expensive locator resolutions in private fields with lazy `ensure*()` methods.
 - Use `escapeRegExp()` for dynamic text matching in filters.
+- Use `exact: true` in `getByRole` when the name could partially match other elements (e.g., `{ name: "All", exact: true }`).
+- TTT uses `rc-checkbox` — always use `.click()` instead of `.check()`/`.uncheck()` for checkboxes.
+- For edit dialogs loading existing data, wait for expected checkbox/form state before interacting (e.g., `expect(checkbox).toBeChecked({ timeout: 5000 })` before unchecking).
+- TTT dialog titles use present participles: "Creating key", "Editing key", "Deleting key".

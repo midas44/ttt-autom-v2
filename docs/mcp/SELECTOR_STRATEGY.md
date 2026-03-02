@@ -19,6 +19,24 @@ When reviewing an accessibility snapshot from Playwright MCP:
 If the accessibility tree is ambiguous, check for `data-qa` attributes
 using `browser_evaluate` in MCP or inspect the DOM.
 
+### exact Matching
+
+When the target element's accessible name is a substring of other elements'
+names, always use `exact: true`:
+
+```typescript
+// "All" also matches "ASSIGNMENTS_ALL", "PROJECTS_ALL"
+page.getByRole("checkbox", { name: "All", exact: true });
+```
+
+### TTT Dialog Naming
+
+TTT modals use **present participle** titles:
+- "Creating key", "Editing key", "Deleting key"
+- NOT "Create key", "Edit key", "Delete key"
+
+Use the correct form in `getByRole('dialog', { name: /Creating key/i })`.
+
 ## Multi-Strategy Fallback
 
 For elements that are unreliable with a single strategy, use the

@@ -106,11 +106,36 @@ test("test_name @regress", async ({ page }, testInfo) => {
 
 Multi-strategy fallback via `resolveFirstVisible()` in `e2e/utils/locatorResolver.ts` — tries candidates in order, returns first visible.
 
+**Important:** Use `exact: true` in `getByRole` when the name is a substring of other element names (e.g., `{ name: "All", exact: true }` to avoid matching "ASSIGNMENTS_ALL").
+
 ## Key Utilities
 
 - **`locatorResolver.ts`** — `resolveFirstVisible(candidates[])` and `pollForMatch(candidates[])` for resilient element resolution
 - **`colorAnalysis.ts`** — DOM color introspection for verifying success (green) / error (red) states
 - **`stringUtils.ts`** — `escapeRegExp()`, `slugify()`, `formatTimestamp()` (ddmmyy_HHmm format)
+
+## TTT UI Component Quirks
+
+- **rc-checkbox:** TTT uses the `rc-checkbox` React component. Playwright's `.check()`/`.uncheck()` do NOT propagate state — always use `.click()` instead. Verify state after clicking with `expect(checkbox).toBeChecked()` / `.not.toBeChecked()`.
+- **Dialog naming:** TTT modals use present participles — "Creating key", "Editing key", "Deleting key" (not imperative forms).
+- **Dialog data race:** After opening edit dialogs, checkbox/form state may not be settled. Wait for expected state (e.g., `expect(checkbox).toBeChecked({ timeout: 5000 })`) before interacting.
+
+## Artifact Saving
+
+Use `testInfo.outputPath()` + write to disk + `testInfo.attach({ path })` to save artifacts to `test-results/`. Do NOT use `testInfo.attach({ body })` alone — it only embeds in the HTML report, leaving `test-results/` empty.
+
+```typescript
+// Screenshots — use page.screenshot({ path }) to write to disk
+const filePath = testInfo.outputPath(name);
+await this.page.screenshot({ fullPage: true, path: filePath });
+await testInfo.attach(name, { path: filePath, contentType: "image/png" });
+
+// Text artifacts — use fs writeFile
+import { writeFile } from "node:fs/promises";
+const filePath = testInfo.outputPath("artifact.txt");
+await writeFile(filePath, content, "utf-8");
+await testInfo.attach("artifact", { path: filePath, contentType: "text/plain" });
+```
 
 ## Playwright Config
 

@@ -36,6 +36,9 @@ Common causes:
 - Element moved to a different container.
 - Dynamic content not yet loaded.
 - Text changed (especially after language switch).
+- **Strict mode violation** — `getByRole` name partially matches multiple elements. Fix with `exact: true` (e.g., `{ name: "All", exact: true }` to avoid matching "ASSIGNMENTS_ALL").
+- **rc-checkbox not responding** — TTT uses `rc-checkbox` React component. `.check()`/`.uncheck()` don't propagate state. Use `.click()` instead and verify with `expect(checkbox).toBeChecked()`.
+- **Dialog data race** — edit dialogs may open before data is loaded into form fields. Wait for expected state before interacting (e.g., `expect(checkbox).toBeChecked({ timeout: 5000 })`).
 
 ### 5. Apply fix
 

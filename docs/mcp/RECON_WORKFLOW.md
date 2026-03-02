@@ -42,6 +42,9 @@ From the reconnaissance data, create a selector map for the feature:
 - Use `resolveFirstVisible()` from `e2e/utils/locatorResolver.ts`
   when multiple selector strategies are needed
 - NEVER use fragile selectors (auto-generated classes, nth-child, etc.)
+- Use `exact: true` in `getByRole` when the name is a substring of other element names
+- TTT uses `rc-checkbox` — use `.click()` instead of `.check()`/`.uncheck()`
+- TTT dialog titles use present participles: "Creating key", "Editing key", "Deleting key"
 
 Cross-reference with existing page objects in `e2e/pages/` — reuse
 selectors that already exist rather than discovering new ones for
@@ -95,3 +98,4 @@ test("{descriptive_name} @regress", async ({ page }, testInfo) => {
 - Timestamp format for uniqueness: `ddmmyy_HHmm`
 - Screenshots at every verification step
 - `globalConfig.delay()` before every assertion
+- Save artifacts to disk via `testInfo.outputPath()` + `attach({ path })`, not `attach({ body })`

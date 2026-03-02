@@ -27,7 +27,9 @@ Create `e2e/data/[testCaseName]Data.ts`:
 
 ### 3. Test Spec
 
-Create `e2e/tests/[test-name].spec.ts` with the composition pattern:
+Create `e2e/tests/[test-name].spec.ts` with the appropriate pattern:
+
+#### UI Test (default)
 
 ```typescript
 import { test } from "@playwright/test";
@@ -50,6 +52,33 @@ test("test_name @regress", async ({ page }, testInfo) => {
   // Cleanup
   await logout.runViaDirectUrl();
   await page.close();
+});
+```
+
+#### API Test (no browser)
+
+For pure API tests, use `{ request }` fixture. No GlobalConfig, login/logout, viewport, or page objects needed.
+
+```typescript
+import { test, expect } from "@playwright/test";
+import { writeFile } from "node:fs/promises";
+
+test("api_test_name @regress", async ({ request }, testInfo) => {
+  const tttConfig = new TttConfig();
+  const data = new ApiTestData();
+  expect(tttConfig.apiToken, "apiToken required").toBeTruthy();
+
+  const url = tttConfig.buildUrl("/api/ttt/v1/...");
+  const headers = { API_SECRET_TOKEN: tttConfig.apiToken };
+
+  const response = await request.get(url, { headers });
+  expect(response.status()).toBe(200);
+  const body = await response.json();
+
+  // Save JSON artifact
+  const filePath = testInfo.outputPath("response.json");
+  await writeFile(filePath, JSON.stringify(body, null, 2), "utf-8");
+  await testInfo.attach("response", { path: filePath, contentType: "application/json" });
 });
 ```
 

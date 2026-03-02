@@ -67,6 +67,8 @@ Playwright API
 
 ## Test Spec Boilerplate
 
+### UI Test (default)
+
 ```typescript
 import { test } from "@playwright/test";
 
@@ -89,12 +91,40 @@ test("test_name @regress", async ({ page }, testInfo) => {
 });
 ```
 
+### API Test (no browser)
+
+For pure API tests, use `{ request }` instead of `{ page }`. No GlobalConfig, login/logout, viewport, or page objects needed.
+
+```typescript
+import { test, expect } from "@playwright/test";
+import { writeFile } from "node:fs/promises";
+
+test("api_test_name @regress", async ({ request }, testInfo) => {
+  const tttConfig = new TttConfig();
+  const data = new ApiTestData();
+  const apiToken = tttConfig.apiToken;
+  expect(apiToken, "apiToken must be configured for this env").toBeTruthy();
+
+  const url = tttConfig.buildUrl("/api/ttt/v1/...");
+  const headers = { API_SECRET_TOKEN: apiToken };
+
+  const response = await request.get(url, { headers });
+  expect(response.status()).toBe(200);
+
+  // Save JSON artifact
+  const body = await response.json();
+  const filePath = testInfo.outputPath("response.json");
+  await writeFile(filePath, JSON.stringify(body, null, 2), "utf-8");
+  await testInfo.attach("response", { path: filePath, contentType: "application/json" });
+});
+```
+
 ## Configuration System
 
 - **`e2e/config/global.yml`** — framework settings (timeout, viewport, delay, window position)
 - **`e2e/config/ttt/ttt.yml`** — app defaults (URL template with `***` placeholder for env, default env, language)
 - **`e2e/config/ttt/envs/*.yml`** — per-environment overrides
-- `TttConfig` resolves `***` in URL template with the env name. `GlobalConfig` wraps `TttConfig` and adds viewport/delay helpers.
+- `TttConfig` resolves `***` in URL template with the env name, and loads env-specific YAML (`envs/{env}.yml`) for properties like `apiToken`. `GlobalConfig` wraps `TttConfig` and adds viewport/delay helpers.
 
 ## Selector Priority
 
@@ -135,6 +165,11 @@ import { writeFile } from "node:fs/promises";
 const filePath = testInfo.outputPath("artifact.txt");
 await writeFile(filePath, content, "utf-8");
 await testInfo.attach("artifact", { path: filePath, contentType: "text/plain" });
+
+// JSON artifacts (API responses)
+const jsonPath = testInfo.outputPath("response.json");
+await writeFile(jsonPath, JSON.stringify(body, null, 2), "utf-8");
+await testInfo.attach("response", { path: jsonPath, contentType: "application/json" });
 ```
 
 ## Playwright Config

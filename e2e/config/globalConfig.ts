@@ -1,6 +1,6 @@
 import * as path from "path";
 import type { Page } from "@playwright/test";
-import { readYaml, readNumber } from "./configUtils";
+import { readYaml, readNumber, readTestDataMode, type TestDataMode } from "./configUtils";
 import { TttConfig } from "./tttConfig";
 
 const GLOBAL_YML = path.resolve(__dirname, "global.yml");
@@ -12,6 +12,7 @@ export class GlobalConfig {
   readonly fixtureDelayMs: number;
   readonly windowWidth: number;
   readonly windowHeight: number;
+  readonly testDataMode: TestDataMode;
   readonly appUrl: string;
 
   private readonly tttConfig: TttConfig;
@@ -28,6 +29,7 @@ export class GlobalConfig {
     this.fixtureDelayMs = readNumber(data["fixtureDelayMs"], 500, "fixtureDelayMs");
     this.windowWidth = readNumber(data["windowWidth"], 2560, "windowWidth");
     this.windowHeight = readNumber(data["windowHeight"], 1440, "windowHeight");
+    this.testDataMode = readTestDataMode(data["testDataMode"]);
   }
 
   /** Returns a promise that resolves after `fixtureDelayMs` milliseconds. */

@@ -17,6 +17,12 @@ Create `e2e/data/[testCaseName]Data.ts`:
 - All properties `readonly`.
 - Include computed properties and formatting methods (timestamps, patterns).
 - Standard timestamp format: `ddmmyy_HHmm`.
+- Add `static async create(mode: TestDataMode, tttConfig: TttConfig)` factory method:
+  - `static` mode: returns `new XxxData()` (zero DB calls).
+  - `dynamic` mode: creates `DbClient`, queries PostgreSQL, passes results as constructor args.
+  - `saved` mode: throws "not yet implemented".
+  - Always wrap DB calls in `try/finally` with `db.close()`.
+- If test needs DB-mined data, create a query file in `e2e/data/queries/`.
 
 ### 2. Page Objects & Fixtures
 
@@ -37,7 +43,7 @@ import { test } from "@playwright/test";
 test("test_name @regress", async ({ page }, testInfo) => {
   const tttConfig = new TttConfig();
   const globalConfig = new GlobalConfig(tttConfig);
-  const data = new SomeTestData();
+  const data = await SomeTestData.create(globalConfig.testDataMode, tttConfig);
 
   await globalConfig.applyViewport(page);
 

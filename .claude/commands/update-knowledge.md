@@ -32,9 +32,16 @@ git diff <commit>~1 <commit> --stat
 
 ### 1c. Memory Files
 
-Read existing memory files to avoid duplicates:
-- `/home/v/.claude/projects/-home-v-Dev-ttt-autom-v2/memory/MEMORY.md`
-- All files linked from MEMORY.md
+Read existing memory files to avoid duplicates.
+
+**Primary location (project-level, committed to git):**
+- `.claude/memory/MEMORY.md`
+- All topic files linked from MEMORY.md (e.g., `.claude/memory/ttt-ui-quirks.md`)
+
+**Also check the local auto-memory redirect:**
+- Read the local auto-memory `MEMORY.md` (path shown in system prompt as "persistent auto memory directory")
+- If it contains a redirect to project-level memory, confirm project-level files are the source of truth
+- If it contains actual content (no redirect), migrate that content to `.claude/memory/` first
 
 ### 1d. Synthesize
 
@@ -44,11 +51,11 @@ Create a numbered list of **new findings** not yet covered in any documentation.
 - **Where discovered:** Which test/file/component
 - **Confidence:** High (verified in multiple runs) / Medium (verified once) / Low (observed but not confirmed)
 
-**Present this list to the user for approval before proceeding to Phase 2.** Use AskUserQuestion to confirm which findings to propagate, or let the user add/remove items.
+**Do NOT ask for user approval — propagate all findings automatically.** The user considers all new information valuable.
 
 ## Phase 2: Update Documentation
 
-For each approved finding, determine which files need updates. Use the target matrix below — a finding may apply to multiple targets.
+For each finding, determine which files need updates. Use the target matrix below — a finding may apply to multiple targets.
 
 ### Target Matrix
 
@@ -62,8 +69,8 @@ For each approved finding, determine which files need updates. Use the target ma
 | `.claude/skills/test-authoring/references/new-test.md` | Test spec authoring rules or patterns |
 | `.claude/skills/selector-fixer/SKILL.md` | New failure causes or diagnostic patterns |
 | `docs/fix/*.md` | Detailed fix writeups for complex or recurring issues (create new file) |
-| Memory: `MEMORY.md` | Index entry for new topic files |
-| Memory: topic files (e.g., `ttt-ui-quirks.md`) | Detailed notes with code examples |
+| Memory: `.claude/memory/MEMORY.md` | Index entry for new topic files |
+| Memory: `.claude/memory/<topic>.md` | Detailed notes with code examples |
 
 ### Update Rules
 
@@ -76,12 +83,14 @@ For each approved finding, determine which files need updates. Use the target ma
 
 ### Memory File Guidelines
 
-Memory directory: `/home/v/.claude/projects/-home-v-Dev-ttt-autom-v2/memory/`
+**Memory directory:** `.claude/memory/` (project-level, committed to git)
 
 - `MEMORY.md` — index with short summaries (max 200 lines). Link to topic files.
 - Topic files (e.g., `ttt-ui-quirks.md`, `playwright-patterns.md`) — detailed notes with code examples, organized by topic.
 - Create new topic files when a finding doesn't fit existing ones.
 - Update existing topic files when the finding extends a documented topic.
+
+**Important:** Do NOT write to the local auto-memory directory (`~/.claude/projects/.../memory/`). That location only contains a redirect to the project-level memory. All memory writes go to `.claude/memory/` in the project root.
 
 ## Phase 3: Summary
 
@@ -91,7 +100,7 @@ After all updates, output a table:
 | File | Change |
 |------|--------|
 | .claude/CLAUDE.md | Added X to Y section |
-| memory/topic.md | New entry about Z |
+| .claude/memory/topic.md | New entry about Z |
 | ... | ... |
 ```
 

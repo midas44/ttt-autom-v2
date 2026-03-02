@@ -75,7 +75,7 @@ import { test } from "@playwright/test";
 test("test_name @regress", async ({ page }, testInfo) => {
   const tttConfig = new TttConfig();
   const globalConfig = new GlobalConfig(tttConfig);
-  const data = new SomeTestData();
+  const data = await SomeTestData.create(globalConfig.testDataMode, tttConfig);
   await globalConfig.applyViewport(page);
 
   // Instantiate fixtures
@@ -124,7 +124,8 @@ test("api_test_name @regress", async ({ request }, testInfo) => {
 - **`e2e/config/global.yml`** — framework settings (timeout, viewport, delay, window position)
 - **`e2e/config/ttt/ttt.yml`** — app defaults (URL template with `***` placeholder for env, default env, language)
 - **`e2e/config/ttt/envs/*.yml`** — per-environment overrides
-- `TttConfig` resolves `***` in URL template with the env name, and loads env-specific YAML (`envs/{env}.yml`) for properties like `apiToken`. `GlobalConfig` wraps `TttConfig` and adds viewport/delay helpers.
+- `TttConfig` resolves `***` in URL template with the env name, and loads env-specific YAML (`envs/{env}.yml`) for properties like `apiToken`, `dbHost`, `dbPort`, `dbName`, `dbUsername`, `dbPassword`. `GlobalConfig` wraps `TttConfig` and adds viewport/delay helpers.
+- `GlobalConfig.testDataMode` (`static | dynamic | saved`) controls whether data classes use hardcoded defaults or query PostgreSQL.
 
 ## Selector Priority
 
@@ -185,6 +186,9 @@ Projects are generated as a matrix of `BROWSERS × TAG_CONFIG`:
 - One class per test case, env-var-driven with fallback defaults
 - Expose computed properties (search terms, date patterns, timestamps)
 - Timestamp format: `ddmmyy_HHmm` for test data uniqueness across runs
+- **Dynamic data mode:** Data classes support `static async create(mode, tttConfig)` factory method. When `testDataMode: dynamic`, queries PostgreSQL via `DbClient` for real employee/project data. Sync constructors are preserved for `static` mode.
+- **DbClient:** `e2e/config/db/dbClient.ts` — Pool-based `pg` client. Always use `try/finally` to call `db.close()`.
+- **Query modules:** `e2e/data/queries/` — separate SQL query files per feature (vacationQueries, reportQueries, adminQueries).
 
 ## Multi-Browser Handling
 
@@ -225,9 +229,9 @@ Both tools produce the same accessibility snapshots and can be used interchangea
 
 ### Postgres MCP Pro (`crystaldba/postgres-mcp`)
 
-Configured in `.claude/.mcp.json` in **restricted (read-only) mode** for future DB integration.
-Currently available for schema exploration and test data discovery only.
-**No test code should depend on this yet.**
+Configured in `.claude/.mcp.json` in **restricted (read-only) mode**.
+Used for schema exploration, test data discovery, and writing query modules for dynamic test data.
+Runtime DB access uses the `pg` npm package via `DbClient` — not MCP.
 
 ```bash
 # Requires POSTGRES_URI env var

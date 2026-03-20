@@ -1,0 +1,137 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - button "Новео ТТТ" [ref=e8] [cursor=pointer]:
+        - img "Новео ТТТ" [ref=e9]
+      - navigation [ref=e13]:
+        - list [ref=e14]:
+          - listitem [ref=e15]:
+            - link "My tasks" [ref=e16] [cursor=pointer]:
+              - /url: /report
+          - listitem [ref=e17]:
+            - button "Calendar of absences" [ref=e18] [cursor=pointer]:
+              - generic [ref=e19]: Calendar of absences
+          - listitem [ref=e21]:
+            - link "Planner" [ref=e22] [cursor=pointer]:
+              - /url: /planner
+          - listitem [ref=e23]:
+            - link "Statistics" [ref=e24] [cursor=pointer]:
+              - /url: /statistics/general
+              - generic [ref=e25]: Statistics
+      - generic [ref=e27]:
+        - generic [ref=e29] [cursor=pointer]:
+          - generic [ref=e30]: EN
+          - img [ref=e32]
+        - generic [ref=e35]:
+          - button "Vladimir Ulyanov Vladimir Ulyanov" [ref=e36] [cursor=pointer]:
+            - img "Vladimir Ulyanov" [ref=e37]
+            - link "Vladimir Ulyanov" [ref=e38]:
+              - /url: /admin/account
+              - generic [ref=e39]:
+                - text: Vladimir
+                - text: Ulyanov
+          - button [ref=e43] [cursor=pointer]
+    - generic:
+      - generic:
+        - generic:
+          - text: You have overdue
+          - link "day off rescheduling requests":
+            - /url: /vacation/request/daysoff-request/APPROVER
+          - text: . Please approve or reject them
+    - generic [ref=e737]:
+      - generic [ref=e738]: My vacations and days off
+      - generic [ref=e739]:
+        - generic [ref=e741]:
+          - generic [ref=e742]:
+            - button "Vacations" [ref=e743] [cursor=pointer]
+            - button "Days off" [ref=e744] [cursor=pointer]
+          - button "Create a request" [ref=e745] [cursor=pointer]
+        - generic [ref=e746]:
+          - generic [ref=e748]:
+            - text: "Available vacation days:"
+            - generic [ref=e749]:
+              - generic [ref=e750]: "0"
+              - button [ref=e754] [cursor=pointer]:
+                - img [ref=e755]
+          - link "Vacation regulation" [ref=e757] [cursor=pointer]:
+            - /url: https://confluence.noveogroup.com/pages/viewpage.action?pageId=13206849
+            - button [ref=e758]:
+              - img [ref=e759]
+            - generic [ref=e762]: Vacation regulation
+        - generic [ref=e763]:
+          - generic [ref=e765]:
+            - text: "Expected balance of days by year-end including future accumulations and write-offs:"
+            - generic [ref=e766]:
+              - generic [ref=e767]: "20"
+              - button [ref=e771] [cursor=pointer]:
+                - img [ref=e772]
+          - button "Vacation events feed" [ref=e774] [cursor=pointer]:
+            - img [ref=e775]
+            - generic [ref=e778]: Vacation events feed
+        - generic [ref=e780]: Start creating a new request to check the number of days available for the desired vacation period
+        - generic [ref=e781]:
+          - generic [ref=e782]:
+            - button "Open" [ref=e783] [cursor=pointer]
+            - button "Closed" [ref=e784] [cursor=pointer]
+            - button "All" [ref=e785] [cursor=pointer]
+          - table [ref=e787]:
+            - rowgroup [ref=e788]:
+              - row "Vacation dates Regular days Administrative days Vacation type Approved by Status Payment month Actions" [ref=e789]:
+                - columnheader "Vacation dates" [ref=e790]:
+                  - button "Vacation dates" [ref=e793] [cursor=pointer]: Vacation dates
+                - columnheader "Regular days" [ref=e795]:
+                  - button "Regular days" [ref=e798] [cursor=pointer]: Regular days
+                - columnheader "Administrative days" [ref=e800]:
+                  - button "Administrative days" [ref=e803] [cursor=pointer]: Administrative days
+                - columnheader "Vacation type" [ref=e805]:
+                  - generic [ref=e806]:
+                    - button "Vacation type" [ref=e808] [cursor=pointer]: Vacation type
+                    - button [ref=e813] [cursor=pointer]:
+                      - img [ref=e814]
+                - columnheader "Approved by" [ref=e819]:
+                  - button "Approved by" [ref=e822] [cursor=pointer]: Approved by
+                - columnheader "Status" [ref=e824]:
+                  - generic [ref=e825]:
+                    - button "Status" [ref=e827] [cursor=pointer]: Status
+                    - button [ref=e832] [cursor=pointer]:
+                      - img [ref=e833]
+                - columnheader "Payment month" [ref=e838]:
+                  - button "Payment month" [ref=e841] [cursor=pointer]: Payment month
+                - columnheader "Actions" [ref=e843]:
+                  - generic [ref=e846]: Actions
+            - rowgroup [ref=e847]:
+              - row "02 – 06 Feb 2026 5 0 Regular Pavel Weinmeister Approved Feb 2026" [ref=e848]:
+                - cell "02 – 06 Feb 2026" [ref=e849]:
+                  - paragraph [ref=e850]: 02 – 06 Feb 2026
+                - cell "5" [ref=e851]:
+                  - paragraph [ref=e852]: "5"
+                - cell "0" [ref=e853]:
+                  - paragraph [ref=e854]: "0"
+                - cell "Regular" [ref=e855]:
+                  - paragraph [ref=e856]: Regular
+                - cell "Pavel Weinmeister" [ref=e857]
+                - cell "Approved" [ref=e858]:
+                  - generic [ref=e859]: Approved
+                - cell "Feb 2026" [ref=e860]:
+                  - paragraph [ref=e861]: Feb 2026
+                - cell [ref=e862]:
+                  - generic [ref=e863]:
+                    - button [ref=e867] [cursor=pointer]:
+                      - img [ref=e868]
+                    - button [ref=e876] [cursor=pointer]:
+                      - img [ref=e877]
+            - rowgroup [ref=e882]:
+              - row "Total 5 0" [ref=e883]:
+                - cell "Total" [ref=e884]
+                - cell "5" [ref=e885]
+                - cell "0" [ref=e886]
+                - cell [ref=e887]
+    - contentinfo [ref=e675]:
+      - generic [ref=e676]:
+        - text: © 2004 – 2026 Noveo |
+        - link "Report an error to developers" [ref=e677] [cursor=pointer]:
+          - /url: https://gitlab.noveogroup.com/noveo-internal-tools/ttt-spring/issues/new?issuable_template=Bug
+      - generic [ref=e678]: "Build #: 2.1.26-SNAPSHOT.289434 | Build date: 26.02.2026"
+  - generic [ref=e680]:
+    - img "NoveoAI" [ref=e683]
+    - button "Expand banner" [ref=e684] [cursor=pointer]

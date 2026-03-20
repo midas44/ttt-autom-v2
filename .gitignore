@@ -1,0 +1,10 @@
+node_modules/
+playwright-report/
+test-results/
+
+# MCP reconnaissance artifacts (not committed)
+docs/mcp/snapshots/
+playwright-profile/
+
+# MCP user data
+.playwright-mcp/

@@ -1,1 +1,15 @@
-env: "dev-new"
+#Env properties
+
+dbHost: "10.0.6.221"
+
+dbPort: 5433
+
+initialDatabase: "ttt"
+
+dbUsername: "ttt"
+
+dbPassword: 123456
+
+apiToken: ""
+
+casLogin: ""

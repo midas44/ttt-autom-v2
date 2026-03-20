@@ -1,1 +1,15 @@
-env: "qa-1"
+#Env properties
+
+dbHost: "10.0.4.220"
+
+dbPort: 5433
+
+initialDatabase: "ttt"
+
+dbUsername: "ttt"
+
+dbPassword: 123456
+
+apiToken: "76c45e8c-457a-4a8f-817f-4160d0cc2eaf"
+
+casLogin: false

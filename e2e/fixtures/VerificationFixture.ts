@@ -93,9 +93,10 @@ export class VerificationFixture {
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
     const name = `verification-${slug}-${timestamp}.png`;
 
-    const screenshotBuffer = await this.page.screenshot({ fullPage: true });
+    const filePath = testInfo.outputPath(name);
+    await this.page.screenshot({ fullPage: true, path: filePath });
     await testInfo.attach(name, {
-      body: screenshotBuffer,
+      path: filePath,
       contentType: "image/png",
     });
 

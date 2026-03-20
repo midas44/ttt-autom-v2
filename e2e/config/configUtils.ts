@@ -94,3 +94,19 @@ export function readWaitUntil(value: unknown): WaitUntilValue {
   }
   return val as WaitUntilValue;
 }
+
+const TEST_DATA_MODES = ["static", "dynamic", "saved"] as const;
+export type TestDataMode = (typeof TEST_DATA_MODES)[number];
+
+/**
+ * Validates the test data mode against allowed values.
+ */
+export function readTestDataMode(value: unknown): TestDataMode {
+  const mode = String(value ?? "static").toLowerCase();
+  if (!TEST_DATA_MODES.includes(mode as TestDataMode)) {
+    throw new Error(
+      `Invalid testDataMode "${mode}". Allowed: ${TEST_DATA_MODES.join(", ")}`,
+    );
+  }
+  return mode as TestDataMode;
+}

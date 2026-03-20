@@ -135,7 +135,11 @@ export class VacationCreateDialog {
   // Private helpers
   // ---------------------------------------------------------------------------
 
-  /** Selects a date in the calendar widget at the given picker index. */
+  /**
+   * Sets a date via the calendar table adjacent to the date picker input.
+   * Clicks the input to open the calendar, navigates to the target month,
+   * then clicks the correct day cell.
+   */
   private async selectDate(
     pickerIndex: number,
     dateStr: string,
@@ -145,36 +149,80 @@ export class VacationCreateDialog {
     const targetMonth = parseInt(monthStr, 10) - 1;
     const targetYear = parseInt(yearStr, 10);
 
-    // Click the date picker input to open the calendar
-    await this.datePickerInputs.nth(pickerIndex).click();
+    const input = this.datePickerInputs.nth(pickerIndex);
+    await input.click();
 
-    const calendar = this.page.locator(".rdtPicker").last();
-    await calendar.waitFor({ state: "visible" });
+    // The calendar table is rendered as a sibling of the input inside the
+    // same parent wrapper. Find it via the input's grandparent container.
+    const calendarTable = input.locator("..").locator("table").first();
+    await calendarTable.waitFor({ state: "visible", timeout: 5000 });
 
-    // Navigate to the correct month/year (up to 24 clicks)
+    // Navigate to the target month/year using ‹/› header buttons
+    const prevButton = calendarTable.locator("th").filter({ hasText: "‹" });
+    const nextButton = calendarTable.locator("th").filter({ hasText: "›" });
+
     for (let attempts = 0; attempts < 24; attempts++) {
-      const headerText = await calendar.locator(".rdtSwitch").textContent();
+      const headerText = await calendarTable
+        .locator("thead tr")
+        .first()
+        .locator("th")
+        .nth(1)
+        .textContent();
       if (!headerText) break;
 
       const { month, year } = this.parseCalendarHeader(headerText.trim());
       if (month === targetMonth && year === targetYear) break;
 
-      // Determine navigation direction
-      const targetDate = targetYear * 12 + targetMonth;
-      const currentDate = year * 12 + month;
+      const target = targetYear * 12 + targetMonth;
+      const current = year * 12 + month;
 
-      if (targetDate > currentDate) {
-        await calendar.locator(".rdtNext").click();
+      if (target > current) {
+        await nextButton.click();
       } else {
-        await calendar.locator(".rdtPrev").click();
+        await prevButton.click();
       }
     }
 
-    // Click the target day
-    await calendar
-      .locator(".rdtDay:not(.rdtOld):not(.rdtNew)")
-      .filter({ hasText: new RegExp(`^${targetDay}$`) })
-      .click();
+    // Click the target day. Adjacent-month cells (grayed-out) use a CSS class
+    // like rdtOld/rdtNew or reduced opacity. Try the class-based filter first,
+    // then fall back to clicking the first cell that isn't obviously from
+    // another month.
+    const currentMonthDay = calendarTable.locator(
+      "tbody td:not(.rdtOld):not(.rdtNew)",
+    ).filter({ hasText: new RegExp(`^${targetDay}$`) });
+
+    if ((await currentMonthDay.count()) > 0) {
+      await currentMonthDay.first().click();
+      return;
+    }
+
+    // Fallback: if no rdtOld/rdtNew classes, select by matching day text
+    // and skipping grayed-out cells (opacity < 1 or lighter text color).
+    const allDayCells = await calendarTable.locator("tbody td").all();
+    for (const cell of allDayCells) {
+      const text = (await cell.textContent())?.trim();
+      if (text !== String(targetDay)) continue;
+
+      const isGrayed = await cell.evaluate((el) => {
+        const s = window.getComputedStyle(el);
+        return (
+          parseFloat(s.opacity) < 0.5 ||
+          el.classList.contains("rdtOld") ||
+          el.classList.contains("rdtNew")
+        );
+      });
+
+      if (!isGrayed) {
+        await cell.click();
+        return;
+      }
+    }
+
+    // Last resort: click any cell with the target day number
+    const anyDay = calendarTable
+      .locator("tbody td")
+      .filter({ hasText: new RegExp(`^${targetDay}$`) });
+    await anyDay.first().click();
   }
 
   /** Parses a calendar header like "December 2025" into month index and year. */

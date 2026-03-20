@@ -1,7 +1,7 @@
-globalTimeout: 15000
-browserName: "chrome"
-windowPositionX: 300
-windowPositionY: 80
+globalTimeout: 10000
+windowPositionX: 0
+windowPositionY: 0
 fixtureDelayMs: 500
-windowWidth: 2560
-windowHeight: 1440
+windowWidth: 1920
+windowHeight: 1200
+testDataMode: dynamic

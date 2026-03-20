@@ -1,0 +1,35 @@
+{
+  "mcpServers": {
+
+    "postgres": {
+      "type": "stdio",
+      "command": "/home/v/.local/bin/uvx",
+      "args": ["postgres-mcp", "--access-mode=restricted"],
+      "env": {
+        "DATABASE_URI": "postgresql://ttt:123456@10.0.4.220:5433/ttt?connect_timeout=10&keepalives=1&keepalives_idle=30&keepalives_interval=10&keepalives_count=3",
+        "NO_PROXY": "10.0.4.220",
+        "no_proxy": "10.0.4.220",
+        "HTTP_PROXY": "",
+        "HTTPS_PROXY": ""
+      }
+    },
+       "ttt-swagger-test": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@ivotoby/openapi-mcp-server"
+      ],
+      "env": {
+        "OPENAPI_SPEC_PATH": "https://ttt-qa-1.noveogroup.com/api/ttt/v2/api-docs?group=test-api",
+        "API_BASE_URL": "https://ttt-qa-1.noveogroup.com/api/ttt",
+        "API_HEADERS": "API_SECRET_TOKEN:af38fc55-97a4-4ea3-86c7-c5c80686f6be",
+        "SERVER_NAME": "ttt-swagger-test",
+        "NO_PROXY": "ttt-qa-1.noveogroup.com,ttt-qa-2.noveogroup.com,*.noveogroup.com",
+        "no_proxy": "ttt-qa-1.noveogroup.com,ttt-qa-2.noveogroup.com,*.noveogroup.com",
+        "HTTP_PROXY": "",
+        "HTTPS_PROXY": ""
+      }
+    } 
+  }
+}

@@ -60,7 +60,7 @@ export class MyVacationsPage {
     ".page-body__title:has-text('My vacations and days off')",
   );
   private readonly tableRows = this.page.locator(
-    "table.user-vacations tbody tr",
+    "table.user-vacations tbody tr, table tbody tr",
   );
   private readonly createRequestButton = this.page.getByRole("button", {
     name: /create a request/i,
@@ -123,12 +123,14 @@ export class MyVacationsPage {
     await row.first().waitFor({ state: "detached" });
   }
 
-  /** Opens the details dialog for a vacation matching the given period. */
+  /** Opens the "Request details" dialog for a vacation matching the given period. */
   async openRequestDetails(
     period: string | RegExp,
   ): Promise<VacationDetailsDialog> {
-    const row = this.vacationRow(period);
-    await row.first().click();
+    const row = this.vacationRow(period).first();
+    const actionsCell = row.locator("td").last();
+    // Second button opens the details/view dialog
+    await actionsCell.locator("button").nth(1).click();
     const dialog = new VacationDetailsDialog(this.page);
     await dialog.waitForOpen();
     return dialog;
@@ -152,7 +154,7 @@ export class MyVacationsPage {
     columnLabel: string,
   ): Promise<Locator> {
     const row = this.vacationRow(period).first();
-    const headerCells = this.page.locator("table.user-vacations thead th");
+    const headerCells = this.page.locator("table thead th");
     const colIndex = await headerCells.evaluateAll(
       (headers: Element[], label: string) => {
         for (let i = 0; i < headers.length; i++) {

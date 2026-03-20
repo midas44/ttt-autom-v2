@@ -1,0 +1,474 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - generic [ref=e6]:
+      - button "Новео ТТТ" [ref=e8] [cursor=pointer]:
+        - img "Новео ТТТ" [ref=e9]
+      - navigation [ref=e13]:
+        - list [ref=e14]:
+          - listitem [ref=e15]:
+            - link "Мои задачи" [ref=e16] [cursor=pointer]:
+              - /url: /report
+          - listitem [ref=e17]:
+            - button "Календарь отсутствий" [active] [ref=e18] [cursor=pointer]:
+              - generic [ref=e19]: Календарь отсутствий
+            - list [ref=e692]:
+              - listitem [ref=e693]:
+                - link "Мои отпуска и выходные" [ref=e694] [cursor=pointer]:
+                  - /url: /vacation/my
+                  - generic [ref=e695]: Мои отпуска и выходные
+              - listitem [ref=e696]:
+                - link "Мои больничные" [ref=e697] [cursor=pointer]:
+                  - /url: /sick-leave/my
+                  - generic [ref=e698]: Мои больничные
+              - listitem [ref=e699]:
+                - link "График доступности" [ref=e700] [cursor=pointer]:
+                  - /url: /vacation/chart
+                  - generic [ref=e701]: График доступности
+          - listitem [ref=e21]:
+            - link "Планировщик" [ref=e22] [cursor=pointer]:
+              - /url: /planner
+          - listitem [ref=e23]:
+            - link "Статистика" [ref=e24] [cursor=pointer]:
+              - /url: /statistics/general
+              - generic [ref=e25]: Статистика
+      - generic [ref=e27]:
+        - generic [ref=e29] [cursor=pointer]:
+          - generic [ref=e30]: RU
+          - img [ref=e32]
+        - generic [ref=e35]:
+          - button "Владимир Ульянов Владимир Ульянов" [ref=e36] [cursor=pointer]:
+            - img "Владимир Ульянов" [ref=e37]
+            - link "Владимир Ульянов" [ref=e38]:
+              - /url: /admin/account
+              - generic [ref=e39]:
+                - text: Владимир
+                - text: Ульянов
+          - button [ref=e43] [cursor=pointer]
+    - generic:
+      - generic:
+        - generic:
+          - text: У вас есть просроченные неподтвержденные
+          - link "заявки на перенос выходных":
+            - /url: /vacation/request/daysoff-request/APPROVER
+          - text: . Пожалуйста, подтвердите или отклоните их
+    - generic [ref=e46]:
+      - generic:
+        - generic:
+          - text: В этом месяце вы зарепортили больше нормы на
+          - strong
+          - text: "%. Норма часов на :"
+          - strong
+          - text: ". Зарепорчено:"
+          - strong
+          - text: Убедитесь, что переработки согласованы с вашим руководителем
+      - generic:
+        - generic:
+          - link "На следующей неделе":
+            - /url: /report
+          - text: есть нерабочие дни, не забудьте зарепортить свои часы
+        - generic:
+          - button:
+            - img
+      - generic [ref=e50]:
+        - textbox "Мой проект / моя задача, номер тикета или URL тикета 1.5h" [ref=e57]
+        - button "Добавить задачу" [ref=e59] [cursor=pointer]
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - generic [ref=e62]: "В феврале отработано:"
+          - generic [ref=e63]: 60/
+          - generic [ref=e64]: 104/
+          - generic [ref=e65]: 112/
+          - generic [ref=e66]: "152"
+          - img [ref=e68] [cursor=pointer]
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - button "Текущая неделя" [disabled] [ref=e73]
+            - button [ref=e74] [cursor=pointer]:
+              - img [ref=e75]
+            - generic [ref=e77]: 23.02.2026
+            - text: –
+            - generic [ref=e78]: 01.03.2026
+            - button [ref=e79] [cursor=pointer]:
+              - img [ref=e80]
+          - generic [ref=e82]:
+            - paragraph [ref=e83]: Группировать по проектам
+            - generic [ref=e84]:
+              - checkbox "Группировать по проектам" [checked]
+      - generic [ref=e88]:
+        - table [ref=e93]:
+          - rowgroup [ref=e105]:
+            - row "Активные задачи пн 23.02 вт 24.02 ср 25.02 чт 26.02 пт 27.02 сб 28.02 вс 01.03 За период Всего" [ref=e106]:
+              - columnheader "Активные задачи" [ref=e107]:
+                - generic [ref=e108]:
+                  - generic [ref=e110]: Активные задачи
+                  - generic [ref=e112]:
+                    - img [ref=e114]
+                    - img [ref=e119]
+                    - img [ref=e121]
+              - columnheader "пн 23.02" [ref=e127]:
+                - generic [ref=e129]:
+                  - generic [ref=e130]: пн
+                  - generic [ref=e131]: "23.02"
+              - columnheader "вт 24.02" [ref=e132]:
+                - generic [ref=e134]:
+                  - generic [ref=e135]: вт
+                  - generic [ref=e136]: "24.02"
+              - columnheader "ср 25.02" [ref=e137]:
+                - generic [ref=e139]:
+                  - generic [ref=e140]: ср
+                  - generic [ref=e141]: "25.02"
+              - columnheader "чт 26.02" [ref=e142]:
+                - generic [ref=e144]:
+                  - generic [ref=e145]: чт
+                  - generic [ref=e146]: "26.02"
+              - columnheader "пт 27.02" [ref=e147]:
+                - generic [ref=e149]:
+                  - generic [ref=e150]: пт
+                  - generic [ref=e151]: "27.02"
+              - columnheader "сб 28.02" [ref=e152]:
+                - generic [ref=e154]:
+                  - generic [ref=e155]: сб
+                  - generic [ref=e156]: "28.02"
+              - columnheader "вс 01.03" [ref=e157]:
+                - generic [ref=e159]:
+                  - generic [ref=e160]: вс
+                  - generic [ref=e161]: "01.03"
+              - columnheader "За период" [ref=e162]:
+                - generic [ref=e164]: За период
+              - columnheader "Всего" [ref=e165]:
+                - generic [ref=e167]: Всего
+          - rowgroup [ref=e168]:
+            - row "HR 0 0 0 0 0 0 0 0 42.75" [ref=e169]:
+              - cell "HR" [ref=e170]:
+                - generic [ref=e171]:
+                  - img [ref=e173] [cursor=pointer]
+                  - text: HR
+              - cell "0" [ref=e175]:
+                - generic [ref=e177]: "0"
+              - cell "0" [ref=e178]:
+                - generic [ref=e180]: "0"
+              - cell "0" [ref=e181]:
+                - generic [ref=e183]: "0"
+              - cell "0" [ref=e184]:
+                - generic [ref=e186]: "0"
+              - cell "0" [ref=e187]:
+                - generic [ref=e189]: "0"
+              - cell "0" [ref=e190]:
+                - generic [ref=e192]: "0"
+              - cell "0" [ref=e193]:
+                - generic [ref=e195]: "0"
+              - cell "0" [ref=e196]:
+                - generic "0" [ref=e198]
+              - cell "42.75" [ref=e199]:
+                - generic "42.75" [ref=e201]
+            - row "Performance review 0 15" [ref=e202]:
+              - cell "Performance review" [ref=e203]:
+                - generic [ref=e204]:
+                  - generic [ref=e205]: Performance review
+                  - button [ref=e206] [cursor=pointer]:
+                    - img [ref=e207]
+              - cell [ref=e209]
+              - cell [ref=e211]
+              - cell [ref=e213]
+              - cell [ref=e215]
+              - cell [ref=e217]
+              - cell [ref=e219]
+              - cell [ref=e221]
+              - cell "0" [ref=e223]:
+                - generic "0" [ref=e225]
+              - cell "15" [ref=e226]:
+                - generic "15" [ref=e228]
+            - row "LanguageLearning 0 0 0 0 0 0 0 0 353" [ref=e229]:
+              - cell "LanguageLearning" [ref=e230]:
+                - generic [ref=e231]:
+                  - img [ref=e233] [cursor=pointer]
+                  - text: LanguageLearning
+              - cell "0" [ref=e235]:
+                - generic [ref=e237]: "0"
+              - cell "0" [ref=e238]:
+                - generic [ref=e240]: "0"
+              - cell "0" [ref=e241]:
+                - generic [ref=e243]: "0"
+              - cell "0" [ref=e244]:
+                - generic [ref=e246]: "0"
+              - cell "0" [ref=e247]:
+                - generic [ref=e249]: "0"
+              - cell "0" [ref=e250]:
+                - generic [ref=e252]: "0"
+              - cell "0" [ref=e253]:
+                - generic [ref=e255]: "0"
+              - cell "0" [ref=e256]:
+                - generic "0" [ref=e258]
+              - cell "353" [ref=e259]:
+                - generic "353" [ref=e261]
+            - row "English / Upper-Intermediate 0 353" [ref=e262]:
+              - cell "English / Upper-Intermediate" [ref=e263]:
+                - generic [ref=e264]:
+                  - generic [ref=e265]: English / Upper-Intermediate
+                  - button [ref=e266] [cursor=pointer]:
+                    - img [ref=e267]
+              - cell [ref=e269]
+              - cell [ref=e271]
+              - cell [ref=e273]
+              - cell [ref=e275]
+              - cell [ref=e277]
+              - cell [ref=e279]
+              - cell [ref=e281]
+              - cell "0" [ref=e283]:
+                - generic "0" [ref=e285]
+              - cell "353" [ref=e286]:
+                - generic "353" [ref=e288]
+            - row "TimeReportingTool-2026 0 0 0 0 0 0 0 0 152.80" [ref=e289]:
+              - cell "TimeReportingTool-2026" [ref=e290]:
+                - generic [ref=e291]:
+                  - img [ref=e293] [cursor=pointer]
+                  - text: TimeReportingTool-2026
+              - cell "0" [ref=e295]:
+                - generic [ref=e297]: "0"
+              - cell "0" [ref=e298]:
+                - generic [ref=e300]: "0"
+              - cell "0" [ref=e301]:
+                - generic [ref=e303]: "0"
+              - cell "0" [ref=e304]:
+                - generic [ref=e306]: "0"
+              - cell "0" [ref=e307]:
+                - generic [ref=e309]: "0"
+              - cell "0" [ref=e310]:
+                - generic [ref=e312]: "0"
+              - cell "0" [ref=e313]:
+                - generic [ref=e315]: "0"
+              - cell "0" [ref=e316]:
+                - generic "0" [ref=e318]
+              - cell "152.80" [ref=e319]:
+                - generic "152.80" [ref=e321]
+            - row "#3276 [Autotests] Переход на TypeScript и Playwright 0 12" [ref=e322]:
+              - cell "#3276 [Autotests] Переход на TypeScript и Playwright" [ref=e323]:
+                - generic [ref=e324]:
+                  - generic [ref=e325]:
+                    - text: "#3276 [Autotests] Переход на TypeScript и Playwright"
+                    - link [ref=e329] [cursor=pointer]:
+                      - /url: https://gitlab.noveogroup.com/noveo-internal-tools/ttt-spring/-/issues/3276
+                      - img [ref=e330]
+                  - button [ref=e334] [cursor=pointer]:
+                    - img [ref=e335]
+              - cell [ref=e337]
+              - cell [ref=e339]
+              - cell [ref=e341]
+              - cell [ref=e343]
+              - cell [ref=e345]
+              - cell [ref=e347]
+              - cell [ref=e349]
+              - cell "0" [ref=e351]:
+                - generic "0" [ref=e353]
+              - cell "12" [ref=e354]:
+                - generic "12" [ref=e356]
+            - row "Communications 0 18.5" [ref=e357]:
+              - cell "Communications" [ref=e358]:
+                - generic [ref=e359]:
+                  - generic [ref=e360]: Communications
+                  - button [ref=e361] [cursor=pointer]:
+                    - img [ref=e362]
+              - cell [ref=e364]
+              - cell [ref=e366]
+              - cell [ref=e368]
+              - cell [ref=e370]
+              - cell [ref=e372]
+              - cell [ref=e374]
+              - cell [ref=e376]
+              - cell "0" [ref=e378]:
+                - generic "0" [ref=e380]
+              - cell "18.5" [ref=e381]:
+                - generic "18.5" [ref=e383]
+            - row "Testing / Automation 0 12.5" [ref=e384]:
+              - cell "Testing / Automation" [ref=e385]:
+                - generic [ref=e386]:
+                  - generic [ref=e387]: Testing / Automation
+                  - button [ref=e388] [cursor=pointer]:
+                    - img [ref=e389]
+              - cell [ref=e391]
+              - cell [ref=e393]
+              - cell [ref=e395]
+              - cell [ref=e397]
+              - cell [ref=e399]
+              - cell [ref=e401]
+              - cell [ref=e403]
+              - cell "0" [ref=e405]:
+                - generic "0" [ref=e407]
+              - cell "12.5" [ref=e408]:
+                - generic "12.5" [ref=e410]
+            - row "Testing / Automation / Research 0 27" [ref=e411]:
+              - cell "Testing / Automation / Research" [ref=e412]:
+                - generic [ref=e413]:
+                  - generic [ref=e414]: Testing / Automation / Research
+                  - button [ref=e415] [cursor=pointer]:
+                    - img [ref=e416]
+              - cell [ref=e418]
+              - cell [ref=e420]
+              - cell [ref=e422]
+              - cell [ref=e424]
+              - cell [ref=e426]
+              - cell [ref=e428]
+              - cell [ref=e430]
+              - cell "0" [ref=e432]:
+                - generic "0" [ref=e434]
+              - cell "27" [ref=e435]:
+                - generic "27" [ref=e437]
+            - row "Testing / Documentation 0 1.5" [ref=e438]:
+              - cell "Testing / Documentation" [ref=e439]:
+                - generic [ref=e440]:
+                  - generic [ref=e441]: Testing / Documentation
+                  - button [ref=e442] [cursor=pointer]:
+                    - img [ref=e443]
+              - cell [ref=e445]
+              - cell [ref=e447]
+              - cell [ref=e449]
+              - cell [ref=e451]
+              - cell [ref=e453]
+              - cell [ref=e455]
+              - cell [ref=e457]
+              - cell "0" [ref=e459]:
+                - generic "0" [ref=e461]
+              - cell "1.5" [ref=e462]:
+                - generic "1.5" [ref=e464]
+            - row "Testing / Infrastructure 0 19.8" [ref=e465]:
+              - cell "Testing / Infrastructure" [ref=e466]:
+                - generic [ref=e467]:
+                  - generic [ref=e468]: Testing / Infrastructure
+                  - button [ref=e469] [cursor=pointer]:
+                    - img [ref=e470]
+              - cell [ref=e472]
+              - cell [ref=e474]
+              - cell [ref=e476]
+              - cell [ref=e478]
+              - cell [ref=e480]
+              - cell [ref=e482]
+              - cell [ref=e484]
+              - cell "0" [ref=e486]:
+                - generic "0" [ref=e488]
+              - cell "19.8" [ref=e489]:
+                - generic "19.8" [ref=e491]
+            - row "Testing / Regression 0 2" [ref=e492]:
+              - cell "Testing / Regression" [ref=e493]:
+                - generic [ref=e494]:
+                  - generic [ref=e495]: Testing / Regression
+                  - button [ref=e496] [cursor=pointer]:
+                    - img [ref=e497]
+              - cell [ref=e499]
+              - cell [ref=e501]
+              - cell [ref=e503]
+              - cell [ref=e505]
+              - cell [ref=e507]
+              - cell [ref=e509]
+              - cell [ref=e511]
+              - cell "0" [ref=e513]:
+                - generic "0" [ref=e515]
+              - cell "2" [ref=e516]:
+                - generic "2" [ref=e518]
+            - row "#3036 [CI] Выводить актуальную и уникальную версию в футере 0 4.5" [ref=e519]:
+              - cell "#3036 [CI] Выводить актуальную и уникальную версию в футере" [ref=e520]:
+                - generic [ref=e522]:
+                  - text: "#3036 [CI] Выводить актуальную и уникальную версию в футере"
+                  - link [ref=e526] [cursor=pointer]:
+                    - /url: https://gitlab.noveogroup.com/noveo-internal-tools/ttt-spring/-/issues/3036
+                    - img [ref=e527]
+              - cell [ref=e531]
+              - cell [ref=e533]
+              - cell [ref=e535]
+              - cell [ref=e537]
+              - cell [ref=e539]
+              - cell [ref=e541]
+              - cell [ref=e543]
+              - cell "0" [ref=e545]:
+                - generic "0" [ref=e547]
+              - cell "4.5" [ref=e548]:
+                - generic "4.5" [ref=e550]
+            - row "#3083 [Админка] [Проекты] Внести изменения в раздел в связи с переносом части функционала в PM Tool 0 2" [ref=e551]:
+              - cell "#3083 [Админка] [Проекты] Внести изменения в раздел в связи с переносом части функционала в PM Tool" [ref=e552]:
+                - generic [ref=e554]:
+                  - text: "#3083 [Админка] [Проекты] Внести изменения в раздел в связи с переносом части функционала в PM Tool"
+                  - link [ref=e558] [cursor=pointer]:
+                    - /url: https://gitlab.noveogroup.com/noveo-internal-tools/ttt-spring/-/issues/3083
+                    - img [ref=e559]
+              - cell [ref=e563]
+              - cell [ref=e565]
+              - cell [ref=e567]
+              - cell [ref=e569]
+              - cell [ref=e571]
+              - cell [ref=e573]
+              - cell [ref=e575]
+              - cell "0" [ref=e577]:
+                - generic "0" [ref=e579]
+              - cell "2" [ref=e580]:
+                - generic "2" [ref=e582]
+            - row "#3093 [Админка] [Проекты] [UI] Фронтовые изменения после интеграции с PM Tool 0 2" [ref=e583]:
+              - cell "#3093 [Админка] [Проекты] [UI] Фронтовые изменения после интеграции с PM Tool" [ref=e584]:
+                - generic [ref=e586]:
+                  - text: "#3093 [Админка] [Проекты] [UI] Фронтовые изменения после интеграции с PM Tool"
+                  - link [ref=e590] [cursor=pointer]:
+                    - /url: https://gitlab.noveogroup.com/noveo-internal-tools/ttt-spring/-/issues/3093
+                    - img [ref=e591]
+              - cell [ref=e595]
+              - cell [ref=e597]
+              - cell [ref=e599]
+              - cell [ref=e601]
+              - cell [ref=e603]
+              - cell [ref=e605]
+              - cell [ref=e607]
+              - cell "0" [ref=e609]:
+                - generic "0" [ref=e611]
+              - cell "2" [ref=e612]:
+                - generic "2" [ref=e614]
+            - row "#3387 [Админка] [Проекты] Add PM Tool internal project ID (pmtId) to integration response and UI model 0 4.5" [ref=e615]:
+              - cell "#3387 [Админка] [Проекты] Add PM Tool internal project ID (pmtId) to integration response and UI model" [ref=e616]:
+                - generic [ref=e618]:
+                  - text: "#3387 [Админка] [Проекты] Add PM Tool internal project ID (pmtId) to integration response and UI model"
+                  - link [ref=e622] [cursor=pointer]:
+                    - /url: https://gitlab.noveogroup.com/noveo-internal-tools/ttt-spring/-/issues/3387
+                    - img [ref=e623]
+              - cell [ref=e627]
+              - cell [ref=e629]
+              - cell [ref=e631]
+              - cell [ref=e633]
+              - cell [ref=e635]
+              - cell [ref=e637]
+              - cell [ref=e639]
+              - cell "0" [ref=e641]:
+                - generic "0" [ref=e643]
+              - cell "4.5" [ref=e644]:
+                - generic "4.5" [ref=e646]
+            - row "Всего 0 0 0 0 0 0 0 0 / 40" [ref=e647]:
+              - cell "Всего" [ref=e648]:
+                - generic "common.total" [ref=e650]: Всего
+              - cell "0" [ref=e651]:
+                - generic "0" [ref=e653]
+              - cell "0" [ref=e654]:
+                - generic "0" [ref=e656]
+              - cell "0" [ref=e657]:
+                - generic "0" [ref=e659]
+              - cell "0" [ref=e660]:
+                - generic "0" [ref=e662]
+              - cell "0" [ref=e663]:
+                - generic "0" [ref=e665]
+              - cell "0" [ref=e666]:
+                - generic "0" [ref=e668]
+              - cell "0" [ref=e669]:
+                - generic "0" [ref=e671]
+              - cell "0 / 40" [ref=e672]:
+                - generic [ref=e674]:
+                  - generic [ref=e675]: "0"
+                  - text: /
+                  - generic [ref=e676]: "40"
+              - cell [ref=e677]
+        - generic [ref=e679]:
+          - text: В расчет для начисления отпускных не берутся часы, зарепорченные на типы проектов Idle time, Production, Learning. Начисления на все остальные типы проектов, включая коммерческие проекты с любой структурой подзадач, остаются без изменений.
+          - link "Положение об отпусках" [ref=e680] [cursor=pointer]:
+            - /url: https://confluence.noveogroup.com/pages/viewpage.action?pageId=13206849
+    - contentinfo [ref=e682]:
+      - generic [ref=e683]:
+        - text: © 2004 – 2026 Noveo |
+        - link "Сообщить разработчикам об ошибке" [ref=e684] [cursor=pointer]:
+          - /url: https://gitlab.noveogroup.com/noveo-internal-tools/ttt-spring/issues/new?issuable_template=Bug
+      - generic [ref=e685]: "Build #: 2.1.26-SNAPSHOT.289329 | Build date: 25.02.2026"
+  - generic [ref=e687]:
+    - img "NoveoAI" [ref=e690]
+    - button "Expand banner" [ref=e691] [cursor=pointer]

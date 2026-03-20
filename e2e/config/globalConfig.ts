@@ -1,23 +1,18 @@
 import * as path from "path";
 import type { Page } from "@playwright/test";
-import {
-  readYaml,
-  readNumber,
-  readBrowserName,
-  type BrowserName,
-} from "./configUtils";
+import { readYaml, readNumber, readTestDataMode, type TestDataMode } from "./configUtils";
 import { TttConfig } from "./tttConfig";
 
 const GLOBAL_YML = path.resolve(__dirname, "global.yml");
 
 export class GlobalConfig {
   readonly globalTimeout: number;
-  readonly browserName: BrowserName;
   readonly windowPositionX: number;
   readonly windowPositionY: number;
   readonly fixtureDelayMs: number;
   readonly windowWidth: number;
   readonly windowHeight: number;
+  readonly testDataMode: TestDataMode;
   readonly appUrl: string;
 
   private readonly tttConfig: TttConfig;
@@ -29,12 +24,12 @@ export class GlobalConfig {
     const data = readYaml(GLOBAL_YML);
 
     this.globalTimeout = readNumber(data["globalTimeout"], 15000, "globalTimeout");
-    this.browserName = readBrowserName(data["browserName"]);
     this.windowPositionX = readNumber(data["windowPositionX"], 300, "windowPositionX");
     this.windowPositionY = readNumber(data["windowPositionY"], 80, "windowPositionY");
     this.fixtureDelayMs = readNumber(data["fixtureDelayMs"], 500, "fixtureDelayMs");
     this.windowWidth = readNumber(data["windowWidth"], 2560, "windowWidth");
     this.windowHeight = readNumber(data["windowHeight"], 1440, "windowHeight");
+    this.testDataMode = readTestDataMode(data["testDataMode"]);
   }
 
   /** Returns a promise that resolves after `fixtureDelayMs` milliseconds. */
@@ -54,43 +49,25 @@ export class GlobalConfig {
   private async positionWindow(page: Page): Promise<void> {
     const x = this.windowPositionX;
     const y = this.windowPositionY;
-    const width = this.windowWidth;
-    const height = this.windowHeight;
 
     try {
-      if (this.browserName === "chrome" || this.browserName === "edge") {
-        await this.positionChromium(page, x, y, width, height);
-      } else {
-        await this.positionFirefox(page, x, y);
-      }
+      // CDP works only on Chromium — use it for position only
+      const cdp = await page.context().newCDPSession(page);
+      const { windowId } = await cdp.send("Browser.getWindowForTarget");
+      await cdp.send("Browser.setWindowBounds", {
+        windowId,
+        bounds: { left: x, top: y },
+      });
     } catch {
-      // Silently ignore — graceful degradation in headless or unsupported environments
+      // CDP unavailable (Firefox) — fall back to window.moveTo
+      try {
+        await page.evaluate(
+          ([px, py]) => window.moveTo(px, py),
+          [x, y] as const,
+        );
+      } catch {
+        // Silently ignore
+      }
     }
-  }
-
-  private async positionChromium(
-    page: Page,
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-  ): Promise<void> {
-    const cdp = await page.context().newCDPSession(page);
-    const { windowId } = await cdp.send("Browser.getWindowForTarget");
-    await cdp.send("Browser.setWindowBounds", {
-      windowId,
-      bounds: { left: x, top: y, width, height, windowState: "normal" },
-    });
-  }
-
-  private async positionFirefox(
-    page: Page,
-    x: number,
-    y: number,
-  ): Promise<void> {
-    await page.evaluate(
-      ([px, py]) => window.moveTo(px, py),
-      [x, y] as const,
-    );
   }
 }

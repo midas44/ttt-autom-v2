@@ -1,0 +1,25 @@
+[   15707ms] [ERROR] TypeError: Cannot read properties of null (reading 'toLocaleLowerCase')
+    at https://ttt-qa-1.noveogroup.com/static/js/316.4d03d035.chunk.js:1:98112
+    at ol (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1246333)
+    at Rc (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1266560)
+    at https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1265295
+    at gc (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1265361)
+    at cc (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1259080)
+    at Vo (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1199473)
+    at https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1256475 @ https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:1
+[   15709ms] TypeError: Cannot read properties of null (reading 'toLocaleLowerCase')
+    at https://ttt-qa-1.noveogroup.com/static/js/316.4d03d035.chunk.js:1:98112
+    at ol (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1246333)
+    at Rc (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1266560)
+    at https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1265295
+    at gc (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1265361)
+    at cc (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1259080)
+    at Vo (https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1199473)
+    at https://ttt-qa-1.noveogroup.com/static/js/main.eb2a6a22.js:2:1256475
+[   18121ms] [ERROR] Failed to load script https://feedback-preprod.noveogroup.com/feedback.js: Event @ https://ttt-qa-1.noveogroup.com/static/js/316.4d03d035.chunk.js:0
+[   18121ms] [ERROR] Failed to load feedback script: Error: Script load error: https://feedback-preprod.noveogroup.com/feedback.js
+    at A.s.onerror (https://ttt-qa-1.noveogroup.com/static/js/316.4d03d035.chunk.js:1:5111) @ https://ttt-qa-1.noveogroup.com/static/js/316.4d03d035.chunk.js:0
+[   18165ms] [ERROR] Access to fetch at 'https://cas-demo.noveogroup.com/login?service=http%3A%2F%2Fcs-preprod.noveogroup.com%2Fapi%2Fresources' (redirected from 'https://cs-preprod.noveogroup.com/api/resources') from origin 'https://ttt-qa-1.noveogroup.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. @ https://ttt-qa-1.noveogroup.com/report:0
+[   18167ms] [ERROR] Failed to load resource: net::ERR_FAILED @ https://cas-demo.noveogroup.com/login?service=http%3A%2F%2Fcs-preprod.noveogroup.com%2Fapi%2Fresources:0
+[   18168ms] Uncaught (in promise) TypeError: Failed to fetch
+    at <anonymous> (https://cs-preprod.noveogroup.com/js/resources.js?5581:32:8815)
